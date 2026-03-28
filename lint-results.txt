@@ -1,0 +1,205 @@
+
+> night-x@0.1.0 lint
+> eslint
+
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\app\page.tsx
+  133:108  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  133:122  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\auth\AuthForms.tsx
+  48:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\tools\Base64Master.tsx
+   23:18  warning  '_unused' is defined but never used                                                                                                                                                                                                                                                      @typescript-eslint/no-unused-vars
+  134:37  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\tools\ColorPalette.tsx
+   4:43   warning  'Download' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-unused-vars
+   4:53   warning  'Share2' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+  20:9    error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\tools\ColorPalette.tsx:20:9
+  18 |
+  19 |     useEffect(() => {
+> 20 |         generatePalette();
+     |         ^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  21 |     }, []);
+  22 |
+  23 |     const copyColor = (hex: string, idx: number) => {  react-hooks/set-state-in-effect
+  75:92   error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           react/no-unescaped-entities
+  75:144  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           react/no-unescaped-entities
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\tools\DuplicateRemover.tsx
+  4:18  warning  'Trash2' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\tools\ImageCompressor.tsx
+  6:18  warning  'AnimatePresence' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\tools\ImageToPDF.tsx
+   5:18  warning  'Download' is defined but never used                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+   5:47  warning  'Check' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   6:18  warning  'Reorder' is defined but never used                                                                                                                                                                                                                                                      @typescript-eslint/no-unused-vars
+  81:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\tools\JSONPrettier.tsx
+   4:10  warning  'Code' is defined but never used             @typescript-eslint/no-unused-vars
+   5:18  warning  'AnimatePresence' is defined but never used  @typescript-eslint/no-unused-vars
+  18:19  error    Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+  29:19  error    Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\tools\LoremIpsum.tsx
+   4:10   warning  'AlignJustify' is defined but never used                         @typescript-eslint/no-unused-vars
+   4:37   warning  'RefreshCw' is defined but never used                            @typescript-eslint/no-unused-vars
+  99:81   error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  99:144  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\tools\MarkdownLive.tsx
+  6:55  warning  'ArrowRight' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\tools\PDFToImage.tsx
+    3:27  warning  'useRef' is defined but never used                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+    5:10  warning  'Upload' is defined but never used                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+    5:56  warning  'Loader2' is defined but never used                                                                                                                                                                                                                                                      @typescript-eslint/no-unused-vars
+    5:65  warning  'ArrowRight' is defined but never used                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+  133:30  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\tools\PasswordGenerator.tsx
+    4:10   warning  'Lock' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-unused-vars
+    5:10   warning  'motion' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+    5:18   warning  'AnimatePresence' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+   42:5    error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\tools\PasswordGenerator.tsx:42:5
+  40 |
+  41 |   useEffect(() => {
+> 42 |     generatePassword();
+     |     ^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  43 |   }, [length, options]);
+  44 |
+  45 |   const copyToClipboard = () => {  react-hooks/set-state-in-effect
+   43:6    warning  React Hook useEffect has a missing dependency: 'generatePassword'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             react-hooks/exhaustive-deps
+  151:13   error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 react/no-unescaped-entities
+  151:100  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 react/no-unescaped-entities
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\tools\QRBuilder.tsx
+  5:10  warning  'QrCode' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\tools\URLCoder.tsx
+   4:10   warning  'Link' is defined but never used                                 @typescript-eslint/no-unused-vars
+  21:18   warning  '_unused' is defined but never used                              @typescript-eslint/no-unused-vars
+  95:21   error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  95:132  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\tools\UnitConverter.tsx
+   5:10  warning  'motion' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+  50:5   error    Error: Cannot access variable before it is declared
+
+`convert` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\tools\UnitConverter.tsx:50:5
+  48 |
+  49 |   useEffect(() => {
+> 50 |     convert();
+     |     ^^^^^^^ `convert` accessed before it is declared
+  51 |   }, [input, fromUnit, toUnit, category]);
+  52 |
+  53 |   const convert = () => {
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\tools\UnitConverter.tsx:53:3
+  51 |   }, [input, fromUnit, toUnit, category]);
+  52 |
+> 53 |   const convert = () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^
+> 54 |     const val = parseFloat(input);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 55 |     if (isNaN(val)) { setOutput("..."); return; }
+     …
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 73 |     setOutput(result.toFixed(6).replace(/\.?0+$/, ""));
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 74 |   };
+     | ^^^^^ `convert` is declared here
+  75 |
+  76 |   const categories = [
+  77 |     { id: "length", icon: <Ruler size={16} />, label: "Length" },  react-hooks/immutability
+  51:6   warning  React Hook useEffect has a missing dependency: 'convert'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                react-hooks/exhaustive-deps
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\tools\VideoShrinker.tsx
+    3:27   warning  'useRef' is defined but never used                               @typescript-eslint/no-unused-vars
+    6:59   warning  'AlertTriangle' is defined but never used                        @typescript-eslint/no-unused-vars
+   46:58   error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+   51:19   error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  136:21   error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  136:151  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\tools\VideoToGIF.tsx
+    6:10   warning  'Upload' is defined but never used                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+    6:46   warning  'Check' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   50:64   error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   55:23   error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  118:33   warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  134:29   error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  134:159  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\tools\WordCounter.tsx
+  17:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\tools\WordCounter.tsx:17:9
+  15 |         const paras = text.split("\n").filter(p => p.trim() !== "").length;
+  16 |         const readTime = Math.ceil(words / 200); // Average 200 wpm
+> 17 |         setStats({ words, chars, paras, readTime });
+     |         ^^^^^^^^ Avoid calling setState() directly within an effect
+  18 |     }, [text]);
+  19 |
+  20 |     const copyToClipboard = () => {  react-hooks/set-state-in-effect
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\ui\Dashboard.tsx
+  88:29  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\ui\ToolCard.tsx
+   3:25  warning  'useState' is defined but never used      @typescript-eslint/no-unused-vars
+  57:14  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\visuals\Background3D.tsx
+   3:38  warning  'useMemo' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+  30:5   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\components\visuals\Background3D.tsx:30:5
+  28 |
+  29 |   useEffect(() => {
+> 30 |     setIsMounted(true);
+     |     ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  31 |     const handleMouseMove = (e: MouseEvent) => {
+  32 |       mouseX.set(e.clientX - window.innerWidth / 2);
+  33 |       mouseY.set(e.clientY - window.innerHeight / 2);  react-hooks/set-state-in-effect
+
+D:\Projects\Anti Gravity\Web\Web 01\night-x\src\lib\VideoEngine.ts
+  4:10  warning  'fetchFile' is defined but never used  @typescript-eslint/no-unused-vars
+
+✖ 65 problems (27 errors, 38 warnings)
+
