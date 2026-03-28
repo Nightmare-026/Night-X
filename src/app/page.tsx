@@ -83,7 +83,7 @@ export default function Home() {
             </div>
             
             <p className="max-w-2xl mx-auto text-white/60 text-base sm:text-lg md:text-xl font-medium leading-relaxed mb-8 sm:mb-12 drop-shadow-sm px-2">
-              Your sovereign command center. A lightning-fast, zero-data-footprint utility suite featuring image manipulation, typography tools, and developers' utilities entirely computed on your device.
+              Your sovereign command center. A lightning-fast, zero-data-footprint utility suite featuring image manipulation, typography tools, and developers&apos; utilities entirely computed on your device.
             </p>
           </motion.div>
         </div>

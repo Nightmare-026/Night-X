@@ -5,9 +5,10 @@
 
 export const downloadBlob = (blob: Blob, fileName: string) => {
     try {
-        // Fallback for legacy IE/Edge 
-        if (window.navigator && (window.navigator as any).msSaveOrOpenBlob) {
-            return (window.navigator as any).msSaveOrOpenBlob(blob, fileName);
+        // @ts-expect-error : msSaveOrOpenBlob is a proprietary IE/Edge API
+        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+            // @ts-expect-error : msSaveOrOpenBlob is a proprietary IE/Edge API
+            return window.navigator.msSaveOrOpenBlob(blob, fileName);
         }
 
         const url = URL.createObjectURL(blob);

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import { Download, Copy, Check, Type, Maximize } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { downloadDataUrl } from "@/lib/downloadUtils";
 
 export const QRBuilder = () => {
@@ -17,7 +17,14 @@ export const QRBuilder = () => {
     if (!svg) return;
     
     setIsExporting(true);
-    const svgData = new XMLSerializer().serializeToString(svg);
+    
+    // Clone SVG and set target dimensions for crisp vector-to-raster rendering
+    const clonedSvg = svg.cloneNode(true) as SVGSVGElement;
+    clonedSvg.setAttribute("width", size.toString());
+    clonedSvg.setAttribute("height", size.toString());
+    clonedSvg.setAttribute("viewBox", `0 0 ${size} ${size}`);
+    
+    const svgData = new XMLSerializer().serializeToString(clonedSvg);
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
     const img = new Image();
@@ -25,17 +32,26 @@ export const QRBuilder = () => {
     img.onload = () => {
       canvas.width = size;
       canvas.height = size;
-      ctx!.fillStyle = "white"; // Ensure white background for QR scanners
-      ctx!.fillRect(0, 0, size, size);
-      ctx?.drawImage(img, 0, 0, size, size);
+      if (ctx) {
+        ctx.fillStyle = "white"; 
+        ctx.fillRect(0, 0, size, size);
+        ctx.drawImage(img, 0, 0, size, size);
+      }
       
       const pngFile = canvas.toDataURL("image/png");
       downloadDataUrl(pngFile, `Night-X-QR-${new Date().getTime()}.png`);
       
-      setTimeout(() => setIsExporting(false), 800);
+      setTimeout(() => setIsExporting(false), 1200);
     };
     
-    img.src = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgData)));
+    // Use modern Blob URL for SVG to ensure cross-browser compatibility and encoding safety
+    const svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+    const url = URL.createObjectURL(svgBlob);
+    img.src = url;
+    
+    // Cleanup URL after load or error
+    img.onerror = () => setIsExporting(false);
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
   };
 
   const copyToClipboard = () => {

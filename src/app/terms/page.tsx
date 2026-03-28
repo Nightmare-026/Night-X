@@ -45,7 +45,7 @@ export default function TermsPage() {
             </h2>
             <div className="space-y-3 text-sm leading-relaxed text-white/50 pl-8 border-l border-white/5">
               <p>
-                Night X operates on a strict "Zero Data Footprint Architecture." This means that the majority of our tools compute entirely on your local device (client-side) using modern browser APIs.
+                Night X operates on a strict &quot;Zero Data Footprint Architecture.&quot; This means that the majority of our tools compute entirely on your local device (client-side) using modern browser APIs.
               </p>
               <p>
                 Files uploaded for conversion, compression, or modification are inherently processed in the temporary memory of your local machine. They are never transmitted, stored, or analyzed on Night X servers unless explicitly stated by a cloud-reliant tool.
@@ -73,7 +73,7 @@ export default function TermsPage() {
             </h2>
             <div className="space-y-3 text-sm leading-relaxed text-white/50 pl-8 border-l border-white/5">
               <p>
-                All utilities on Night X are provided "as is," without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and non-infringement.
+                All utilities on Night X are provided &quot;as is,&quot; without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and non-infringement.
               </p>
               <p>
                 Under no event shall the authors or copyright holders be liable for any claim, damages, or other liability, whether in an action of contract, tort, or otherwise, arising from, out of, or in connection with the software or the use or other dealings in the software.

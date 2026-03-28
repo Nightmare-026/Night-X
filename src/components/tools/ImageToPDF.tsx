@@ -74,6 +74,7 @@ export const ImageToPDF = () => {
             animate={{ opacity: 1, scale: 1 }}
             className="aspect-[3/4] relative rounded-3xl overflow-hidden glass-card border-white/5 group shadow-lg bg-black/20"
           >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={img.preview}
               alt="preview"
