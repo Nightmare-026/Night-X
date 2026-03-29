@@ -91,13 +91,13 @@ export const Dashboard = ({ isOpen, onClose }: DashboardProps) => {
               </div>
             </motion.div>
           ) : (
-            /* ─── PROFILE SIDEBAR ─── */
+            /* ─── PROFILE MODAL ─── */
             <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
+              initial={{ opacity: 0, scale: 0.95, x: "20%" }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              exit={{ opacity: 0, scale: 0.95, x: "20%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 h-full w-full sm:max-w-md bg-night-black/95 border-l border-white/5 z-[101] flex flex-col shadow-2xl matte-grain overflow-hidden"
+              className="fixed top-0 right-0 md:top-1/2 md:left-1/2 md:right-auto md:-translate-x-1/2 md:-translate-y-1/2 h-full w-full md:h-fit md:max-h-[85vh] md:max-w-md bg-night-black/95 border-l md:border border-white/5 z-[101] flex flex-col shadow-2xl md:shadow-[0_0_100px_rgba(0,0,0,0.8)] md:rounded-[3rem] matte-grain overflow-hidden"
             >
               <div className="flex-1 overflow-y-auto p-6 sm:p-8">
                 {/* Header */}

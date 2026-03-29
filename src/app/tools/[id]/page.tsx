@@ -22,6 +22,14 @@ import { WordCounter } from "@/components/tools/WordCounter";
 import { DuplicateRemover } from "@/components/tools/DuplicateRemover";
 import { LoremIpsum } from "@/components/tools/LoremIpsum";
 import { ColorPalette } from "@/components/tools/ColorPalette";
+import { ScientificCalculator } from "@/components/tools/ScientificCalculator";
+import { AgeCalculator } from "@/components/tools/AgeCalculator";
+import { EMICalculator } from "@/components/tools/EMICalculator";
+import { BaseConverter } from "@/components/tools/BaseConverter";
+import { DiscountCalculator } from "@/components/tools/DiscountCalculator";
+import { CGPACalculator } from "@/components/tools/CGPACalculator";
+import { CaseConverter } from "@/components/tools/CaseConverter";
+import { TextEncryptor } from "@/components/tools/TextEncryptor";
 
 // Mapping of slugs to components and metadata
 const toolsMap: Record<string, { title: string, description: string, color: string, component?: React.ReactNode }> = {
@@ -122,10 +130,58 @@ const toolsMap: Record<string, { title: string, description: string, color: stri
     component: <LoremIpsum />
   },
   "color-palette": {
-    title: "Color Palette",
-    description: "Generate and extract beautiful color palettes.",
+    title: "Color Palette", 
+    description: "Generate and extract beautiful color palettes.", 
     color: "#ec4899",
     component: <ColorPalette />
+  },
+  "scientific-calculator": {
+    title: "Scientific Calculator",
+    description: "Advanced mathematical processing engine with scientific functions.",
+    color: "#3b82f6",
+    component: <ScientificCalculator />
+  },
+  "age-calculator": {
+    title: "Age Calculator",
+    description: "Precision synthesis of your biological duration and temporal status.",
+    color: "#8b5cf6",
+    component: <AgeCalculator />
+  },
+  "emi-calculator": {
+    title: "EMI Calculator",
+    description: "Loan interest, monthly installments, and payoff analysis.",
+    color: "#d946ef",
+    component: <EMICalculator />
+  },
+  "base-converter": {
+    title: "Number Base Converter",
+    description: "Bidirectional synthesis between Hex, Binary, Decimal, and Octal.",
+    color: "#06b6d4",
+    component: <BaseConverter />
+  },
+  "discount-calculator": {
+    title: "Discount Calculator",
+    description: "Analyze price savings, discounts, and tax protocols.",
+    color: "#10b981",
+    component: <DiscountCalculator />
+  },
+  "cgpa-calculator": {
+    title: "CGPA Calculator",
+    description: "Academic percentage to CGPA transformation system.",
+    color: "#f43f5e",
+    component: <CGPACalculator />
+  },
+  "case-converter": {
+    title: "Case Converter",
+    description: "Bulk text transformation (UPPER, lower, Title, Camel, Snake).",
+    color: "#0ea5e9",
+    component: <CaseConverter />
+  },
+  "text-encryptor": {
+    title: "Text Encryptor/Decrypter",
+    description: "Secure Base64, Hex, and Rot13 client-side encryption.",
+    color: "#6366f1",
+    component: <TextEncryptor />
   },
 };
 

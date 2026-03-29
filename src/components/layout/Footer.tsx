@@ -42,7 +42,7 @@ export const Footer = () => {
           <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-white/80">Security</h4>
           <ul className="space-y-4">
             <FooterLink label="Privacy Protocol" href="#" />
-            <FooterLink label="Terms of Service" href="#" />
+            <FooterLink label="Terms of Service" href="/terms" />
             <FooterLink label="Zero Data Policy" href="#" />
             <FooterLink label="Edge Processing" href="#" />
           </ul>
