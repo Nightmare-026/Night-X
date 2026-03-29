@@ -84,9 +84,9 @@ export const Dashboard = ({ isOpen, onClose }: DashboardProps) => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 30 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="fixed inset-0 z-[101] flex items-center justify-center p-4 sm:p-6 pointer-events-none"
+              className="fixed inset-0 z-[101] flex items-center justify-center p-4 sm:p-6"
             >
-              <div className="relative w-full max-w-sm pointer-events-auto">
+              <div className="relative w-full max-w-sm">
                 <div className="absolute -inset-16 bg-night-indigo/20 blur-[100px] rounded-full -z-10" />
                 <div className="bg-night-black/95 border border-white/[0.08] rounded-[2.5rem] shadow-[0_50px_100px_rgba(0,0,0,0.9)] overflow-hidden">
                   <div className="flex items-center justify-between p-7 pb-0">
@@ -206,10 +206,10 @@ export const Dashboard = ({ isOpen, onClose }: DashboardProps) => {
                             </label>
                           )}
                         </div>
-                        <div>
-                          <h3 className="text-2xl font-black text-white tracking-tight mb-2">{displayName}</h3>
-                          <div className="px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 inline-block">
-                            <p className="text-[10px] font-black text-white/40 uppercase tracking-widest">{user.email}</p>
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-2xl font-black text-white tracking-tight mb-2 truncate">{displayName}</h3>
+                          <div className="px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 inline-block max-w-full overflow-hidden">
+                            <p className="text-[10px] font-black text-white/40 uppercase tracking-widest truncate break-all">{user.email}</p>
                           </div>
                         </div>
                       </div>
