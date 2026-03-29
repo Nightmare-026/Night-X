@@ -89,14 +89,14 @@ export const NightXLogo = ({ size = 40 }: { size?: number }) => {
 
             {/* Typography Overhaul */}
             <div className="flex flex-col -gap-1">
-                <span className="text-sm font-black tracking-[0.2em] text-white uppercase group-hover:text-night-emerald transition-all leading-none duration-500">
+                <span className="text-base font-black tracking-[0.25em] text-white uppercase group-hover:text-night-emerald transition-all leading-none duration-500">
                     <span className="relative inline-block">
                         <span className="relative z-10 bg-gradient-to-r from-night-indigo via-night-emerald to-white bg-[size:200%] bg-clip-text text-transparent group-hover:animate-gradient-x transition-opacity">NIGHT</span>
-                        <span className="absolute inset-0 blur-[4px] bg-night-indigo/30 group-hover:bg-night-emerald/30 transition-colors duration-500 -z-10" />
+                        <span className="absolute inset-0 blur-[4px] bg-night-indigo/30 group-hover:bg-night-emerald/40 transition-colors duration-500 -z-10" />
                     </span>
-                    <span className="ml-1 text-night-indigo group-hover:text-white drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]">X</span>
+                    <span className="ml-1 text-night-indigo group-hover:text-white drop-shadow-[0_0_12px_rgba(99,102,241,0.7)]">X</span>
                 </span>
-                <span className="text-[7px] font-black tracking-[0.5em] text-white/50 uppercase group-hover:text-white/80 transition-all duration-700">
+                <span className="text-[8px] font-black tracking-[0.6em] text-white/60 uppercase group-hover:text-white/100 transition-all duration-700">
                     Sovereign Hub
                 </span>
             </div>

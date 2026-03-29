@@ -8,11 +8,21 @@ export const Background3D = () => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const springConfig = { damping: 20, stiffness: 100 };
+  const springConfig = { damping: 25, stiffness: 150 };
   const sx = useSpring(mouseX, springConfig);
   const sy = useSpring(mouseY, springConfig);
-  const sx2 = useSpring(mouseX, { damping: 30 });
-  const sy2 = useSpring(mouseY, { damping: 30 });
+  const sx2 = useSpring(mouseX, { damping: 40, stiffness: 120 });
+  const sy2 = useSpring(mouseY, { damping: 40, stiffness: 120 });
+
+  // Color Cycling Engine
+  const [hue, setHue] = useState(260); // Starting with Indigo-ish hue
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setHue((prev) => (prev + 1) % 360);
+    }, 50); // Smooth 20fps hue rotation
+    return () => clearInterval(interval);
+  }, []);
 
   const [particles] = useState(() => 
     [...Array(20)].map(() => ({
@@ -40,14 +50,22 @@ export const Background3D = () => {
 
   return (
     <div className="fixed inset-0 -z-50 overflow-hidden bg-night-black">
-      {/* Mesh Gradients */}
+      {/* Dynamic Mesh Gradients */}
       <motion.div
-        style={{ x: sx, y: sy }}
-        className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-night-indigo/20 rounded-full blur-[120px]"
+        style={{ 
+          x: sx, 
+          y: sy,
+          backgroundColor: `hsla(${hue}, 70%, 50%, 0.15)` 
+        }}
+        className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full blur-[140px] transition-colors duration-1000 ease-linear"
       />
       <motion.div
-        style={{ x: sx2, y: sy2 }}
-        className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-night-emerald/10 rounded-full blur-[150px]"
+        style={{ 
+          x: sx2, 
+          y: sy2,
+          backgroundColor: `hsla(${(hue + 120) % 360}, 70%, 50%, 0.1)` 
+        }}
+        className="absolute bottom-1/4 right-1/4 w-[700px] h-[700px] rounded-full blur-[160px] transition-colors duration-1000 ease-linear"
       />
 
       {/* Floating 3D Elements (CSS Particles) */}

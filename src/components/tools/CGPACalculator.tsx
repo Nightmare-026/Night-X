@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import { GraduationCap, Stars } from "lucide-react";
+import { TiltCard } from "@/components/ui/TiltCard";
 
 export const CGPACalculator = () => {
     const [percent, setPercent] = useState<number>(75);
@@ -51,20 +52,26 @@ export const CGPACalculator = () => {
                         />
                     </div>
 
-                    <div className="pt-10 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-8">
-                        <div className="text-center sm:text-left">
-                            <p className="text-[8px] font-black uppercase tracking-widest text-white/20 mb-2">Resulting CGPA</p>
-                            <div className="flex items-center gap-3">
-                                <h3 className="text-6xl font-black text-white tracking-tighter">{cgpa.toFixed(2)}</h3>
-                                <div className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-500">
-                                    <Stars size={20} />
+                    <div className="pt-10 border-t border-white/5 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <TiltCard
+                            color="rgba(147, 51, 234, 0.4)"
+                            className="w-full"
+                        >
+                            <div className="p-8 flex flex-col items-center justify-center gap-4 text-center h-full">
+                                <span className="text-[11px] font-black uppercase tracking-[0.4em] text-white/40 block">Resulting CGPA</span>
+                                <div className="flex items-center gap-4">
+                                    <h3 className="text-6xl font-black text-white tracking-tighter">{cgpa.toFixed(2)}</h3>
+                                    <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-500">
+                                        <Stars size={24} />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </TiltCard>
 
-                        <div className="p-6 rounded-[2rem] bg-night-indigo/10 border border-night-indigo/20 animate-pulse">
-                            <p className="text-[8px] font-black uppercase tracking-[0.3em] text-white/40 mb-1 leading-none">Standard Matrix</p>
-                            <p className="text-[10px] font-bold text-white uppercase tracking-widest leading-none">Divided by 9.5</p>
+                        <div className="p-8 rounded-[2rem] bg-night-indigo/5 border border-night-indigo/20 flex flex-col items-center justify-center text-center gap-2 border-dashed">
+                            <span className="text-[11px] font-black uppercase tracking-[0.4em] text-white/40 leading-none">Standard Matrix</span>
+                            <p className="text-lg font-black text-white uppercase tracking-widest leading-none">Divided by 9.5</p>
+                            <div className="w-1.5 h-1.5 rounded-full bg-night-indigo animate-pulse mt-2" />
                         </div>
                     </div>
                 </div>

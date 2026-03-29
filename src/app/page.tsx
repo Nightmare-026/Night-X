@@ -58,9 +58,9 @@ export default function Home() {
                 <span className="absolute inset-0 text-night-black translate-y-6 blur-[15px] opacity-80 group-hover:translate-x-3 transition-transform duration-700">NIGHT X</span>
                 
                 {/* Layer 2: Core Text (With Dynamic Colorful Effect) */}
-                <span className="relative z-10 block text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
-                  <span className="bg-gradient-to-r from-[#9333ea] via-[#38bdf8] to-[#ec4899] bg-[size:300%] bg-clip-text text-transparent animate-gradient-slow">NIGHT</span>
-                  <span className="ml-2 sm:ml-4 bg-gradient-to-br from-[#9333ea] via-[#38bdf8] to-[#ec4899] bg-clip-text text-transparent opacity-95">X</span>
+                <span className="relative z-10 block text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]">
+                  <span className="bg-gradient-to-r from-[#a855f7] via-[#0ea5e9] to-[#f43f5e] bg-[size:200%] bg-clip-text text-transparent animate-gradient-slow font-black">NIGHT</span>
+                  <span className="ml-2 sm:ml-4 bg-gradient-to-br from-[#a855f7] via-[#0ea5e9] to-[#f43f5e] bg-clip-text text-transparent opacity-100 font-black">X</span>
                 </span>
 
                 {/* Layer 3: Optimized Light Sweep (No Blur) */}
@@ -82,8 +82,8 @@ export default function Home() {
               </motion.div>
             </div>
             
-            <p className="max-w-2xl mx-auto text-white/60 text-base sm:text-lg md:text-xl font-medium leading-relaxed mb-8 sm:mb-12 drop-shadow-sm px-2">
-              Your sovereign command center. A lightning-fast, zero-data-footprint utility suite featuring image manipulation, typography tools, and developers&apos; utilities entirely computed on your device.
+            <p className="max-w-3xl mx-auto text-white/80 text-sm sm:text-base md:text-xl font-medium leading-[1.6] mb-8 sm:mb-12 drop-shadow-md px-2 italic tracking-wide">
+              Your sovereign command center. A lightning-fast, zero-data-footprint utility suite featuring image manipulation, typography tools, and developers&apos; utilities computed locally.
             </p>
           </motion.div>
         </div>
@@ -94,7 +94,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-3 sm:gap-4 mb-8 sm:mb-12">
             <div className="h-[2px] flex-1 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-            <h2 className="text-[10px] sm:text-[11px] font-black uppercase tracking-[0.3em] sm:tracking-[0.6em] text-white/50 whitespace-nowrap">
+            <h2 className="text-[11px] sm:text-[12px] font-black uppercase tracking-[0.5em] sm:tracking-[1em] text-white/70 whitespace-nowrap">
               {searchQuery ? `Search Results (${filteredTools.length})` : "Executive Suite"}
             </h2>
             <div className="h-[2px] flex-1 bg-gradient-to-r from-transparent via-white/20 to-transparent" />

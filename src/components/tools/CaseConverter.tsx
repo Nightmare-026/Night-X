@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Type, Copy, Check, Trash2, ArrowRight } from "lucide-react";
+import { Copy, Check, Trash2 } from "lucide-react";
+import { TiltCard } from "@/components/ui/TiltCard";
 
 export const CaseConverter = () => {
     const [text, setText] = useState("");
@@ -61,28 +62,32 @@ export const CaseConverter = () => {
                     value={text}
                     onChange={(e) => setText(e.target.value)}
                     placeholder="Enter text to transform..."
-                    className="w-full h-80 bg-white/5 border border-white/10 rounded-[2.5rem] p-10 text-white focus:outline-none focus:border-night-indigo/50 transition-all font-medium text-lg leading-relaxed placeholder:text-white/10 resize-none custom-scrollbar shadow-inner"
+                    className="w-full h-80 bg-white/5 border border-white/10 rounded-[2rem] p-10 text-white focus:outline-none focus:border-night-indigo/50 transition-all font-medium text-lg leading-relaxed placeholder:text-white/10 resize-none custom-scrollbar shadow-inner"
                 />
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                 {transformations.map((t, idx) => (
-                    <button
+                    <TiltCard
                         key={idx}
+                        color="rgba(147, 51, 234, 0.4)"
                         onClick={t.action}
-                        className="p-6 rounded-[2rem] bg-white/5 border border-white/5 text-white/60 hover:text-white hover:bg-white/10 hover:border-white/10 transition-all flex flex-col items-center justify-center gap-3 group relative overflow-hidden"
+                        className="cursor-pointer"
                     >
-                        <div className="absolute top-0 right-0 w-16 h-16 bg-night-indigo/5 blur-2xl group-hover:bg-night-indigo/10 transition-all" />
-                        <span className="text-[10px] font-black uppercase tracking-[0.3em] font-mono">{t.label}</span>
-                        <ArrowRight size={14} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-                    </button>
+                        <div className="p-8 flex flex-col items-center justify-center gap-4 h-full min-h-[140px]">
+                            <span className="text-[11px] font-black uppercase tracking-[0.4em] text-white/40 group-hover:text-white transition-colors text-center leading-relaxed">
+                                {t.label}
+                            </span>
+                            <div className="w-8 h-[2px] bg-white/10 group-hover:bg-night-indigo/50 transition-colors" />
+                        </div>
+                    </TiltCard>
                 ))}
             </div>
 
-            <div className="p-6 rounded-[2.5rem] bg-night-indigo/5 border border-white/5 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                    <Type size={16} className="text-night-indigo" />
-                    <span className="text-[10px] font-black uppercase tracking-widest text-white/20 leading-none">String Manipulation Engine Active</span>
+            <div className="p-6 rounded-[2rem] bg-night-indigo/5 border border-white/5 flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                    <div className="w-2 h-2 rounded-full bg-night-indigo animate-pulse" />
+                    <span className="text-[11px] font-black uppercase tracking-[0.4em] text-white/30 leading-none">String Manipulation Engine Active</span>
                 </div>
             </div>
         </div>

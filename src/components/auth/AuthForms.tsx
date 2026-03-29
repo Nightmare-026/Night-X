@@ -208,7 +208,7 @@ export const AuthForms = ({ onSuccess }: AuthFormsProps) => {
   return (
     <div className="w-full max-w-sm mx-auto">
       {/* ── Mode Toggle ── */}
-      <div className="flex rounded-2xl bg-white/[0.03] border border-white/[0.06] p-1 mb-7 backdrop-blur-sm">
+      <div className="flex rounded-[1.25rem] bg-white/[0.03] border border-white/[0.06] p-1 mb-7 backdrop-blur-sm">
         <button
           type="button"
           onClick={() => switchMode("signin")}
@@ -259,21 +259,22 @@ export const AuthForms = ({ onSuccess }: AuthFormsProps) => {
         disabled={isProcessing}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.97 }}
-        className="google-btn w-full flex items-center justify-center gap-3 py-3.5 rounded-2xl mb-4 disabled:opacity-50 disabled:pointer-events-none relative overflow-hidden group"
+        className="night-btn-gradient w-full flex items-center justify-center gap-3 py-3.5 rounded-[1.25rem] mb-4 disabled:opacity-50 disabled:pointer-events-none relative overflow-hidden group border border-white/20"
       >
-        <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
         {googleLoading ? (
           <Loader2 size={18} className="animate-spin text-white/70" />
         ) : (
           <>
             {/* Google G Icon */}
-            <svg width="18" height="18" viewBox="0 0 48 48" className="flex-shrink-0">
-              <path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34 6.2 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z" />
-              <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.5 16 19 12 24 12c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34 6.2 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z" />
-              <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.3 35.3 26.8 36 24 36c-5.2 0-9.7-3.3-11.3-8H5.9C9.3 36.9 16.1 44 24 44z" />
-              <path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C41 35.6 44 30.2 44 24c0-1.3-.1-2.6-.4-3.9z" />
-            </svg>
-            <span className="text-[11px] font-black text-white/80 uppercase tracking-[0.15em]">
+            <div className="bg-white/90 p-1 rounded-lg flex items-center justify-center">
+              <svg width="16" height="16" viewBox="0 0 48 48">
+                <path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34 6.2 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z" />
+                <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.5 16 19 12 24 12c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34 6.2 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z" />
+                <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.3 35.3 26.8 36 24 36c-5.2 0-9.7-3.3-11.3-8H5.9C9.3 36.9 16.1 44 24 44z" />
+                <path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C41 35.6 44 30.2 44 24c0-1.3-.1-2.6-.4-3.9z" />
+              </svg>
+            </div>
+            <span className="text-[11px] font-black text-white uppercase tracking-[0.15em]">
               Continue with Google
             </span>
           </>
@@ -416,12 +417,10 @@ export const AuthForms = ({ onSuccess }: AuthFormsProps) => {
           <motion.button
             type="submit"
             disabled={isProcessing || !!success}
-            whileHover={{ scale: 1.02, boxShadow: "0 0 60px rgba(147,51,234,0.4), 0 0 120px rgba(56,189,248,0.15)" }}
+            whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.97 }}
-            className="night-btn-gradient w-full py-4 rounded-2xl text-white text-xs font-black uppercase tracking-[0.2em] transition-all disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2.5 mt-3 relative overflow-hidden group"
+            className="night-btn-gradient w-full py-4 rounded-[1.25rem] text-white text-xs font-black uppercase tracking-[0.2em] transition-all disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2.5 mt-3 relative overflow-hidden group"
           >
-            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
-
             {loading ? (
               <Loader2 size={16} className="animate-spin relative z-10" />
             ) : success ? (

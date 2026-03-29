@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
 import { Calendar, User, Clock, ArrowRight } from "lucide-react";
+import { TiltCard } from "@/components/ui/TiltCard";
 
 export const AgeCalculator = () => {
     const [dob, setDob] = useState("");
@@ -54,32 +54,32 @@ export const AgeCalculator = () => {
                         </div>
                         <button 
                             onClick={calculateAge}
-                            className="w-full py-4 rounded-[1.5rem] night-btn-gradient text-white flex items-center justify-center gap-3 font-black uppercase tracking-widest text-[10px] shadow-lg shadow-night-indigo/20 active:scale-95 transition-all"
+                            className="w-full py-6 rounded-[2rem] night-btn-gradient text-white flex items-center justify-center gap-4 font-black uppercase tracking-[0.4em] text-[11px] shadow-lg shadow-night-indigo/20 active:scale-95 transition-all border border-white/20"
                         >
-                            Compute Age Synthesis <ArrowRight size={16} />
+                            Compute Age Synthesis <ArrowRight size={18} />
                         </button>
                     </div>
                 </div>
 
                 {/* Result Grid */}
-                <div className="grid grid-cols-1 gap-4">
+                <div className="grid grid-cols-1 gap-6">
                     <MetricCard 
                         label="Solar Years"
                         value={age ? age.years : "--"}
-                        icon={<Clock className="text-night-indigo" />}
-                        delay={0}
+                        icon={<Clock size={24} className="text-night-indigo" />}
+                        color="rgba(147, 51, 234, 0.3)"
                     />
                      <MetricCard 
                         label="Lunar Months"
                         value={age ? age.months : "--"}
-                        icon={<Calendar className="text-sky-400" />}
-                        delay={0.1}
+                        icon={<Calendar size={24} className="text-sky-400" />}
+                        color="rgba(56, 189, 248, 0.3)"
                     />
                      <MetricCard 
                         label="Rotation Days"
                         value={age ? age.days : "--"}
-                        icon={<User className="text-night-emerald" />}
-                        delay={0.2}
+                        icon={<User size={24} className="text-night-emerald" />}
+                        color="rgba(16, 185, 129, 0.3)"
                     />
                 </div>
             </div>
@@ -95,21 +95,26 @@ export const AgeCalculator = () => {
     );
 };
 
-const MetricCard = ({ label, value, icon, delay }: any) => (
-    <motion.div
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay }}
-        className="glass-card p-6 rounded-[2rem] bg-white/5 border border-white/5 flex items-center justify-between group hover:border-white/10 transition-all"
+interface MetricCardProps {
+    label: string;
+    value: string | number;
+    icon: React.ReactNode;
+    color: string;
+}
+
+const MetricCard = ({ label, value, icon, color }: MetricCardProps) => (
+    <TiltCard
+        color={color}
+        className="w-full"
     >
-        <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center border border-white/5 group-hover:scale-110 transition-transform">
+        <div className="p-8 flex flex-col items-center justify-center gap-4 text-center h-full min-h-[160px]">
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 group-hover:scale-110 transition-all duration-500">
                 {icon}
             </div>
             <div>
-                <p className="text-[8px] font-black uppercase tracking-[0.3em] text-white/20 mb-1">{label}</p>
-                <h4 className="text-3xl font-black text-white tracking-tighter">{value}</h4>
+                <span className="text-[11px] font-black uppercase tracking-[0.4em] text-white/40 block mb-2">{label}</span>
+                <h4 className="text-4xl font-black text-white tracking-tighter">{value}</h4>
             </div>
         </div>
-    </motion.div>
+    </TiltCard>
 );

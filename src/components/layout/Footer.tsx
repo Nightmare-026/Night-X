@@ -26,25 +26,14 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* Quick Links */}
+        {/* Security / Legal */}
         <div className="space-y-4 sm:space-y-6">
-          <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-white/80">Platform</h4>
+          <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-white/80">Protocols</h4>
           <ul className="space-y-4">
-            <FooterLink label="Executive Hub" href="/" />
-            <FooterLink label="Developer Tools" href="/#developer" />
-            <FooterLink label="Media Engine" href="/#media" />
-            <FooterLink label="Status Beta" href="#" />
-          </ul>
-        </div>
-
-        {/* Legal */}
-        <div className="space-y-4 sm:space-y-6">
-          <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-white/80">Security</h4>
-          <ul className="space-y-4">
-            <FooterLink label="Privacy Protocol" href="#" />
+            <FooterLink label="Privacy Protocol" href="/privacy" />
             <FooterLink label="Terms of Service" href="/terms" />
-            <FooterLink label="Zero Data Policy" href="#" />
-            <FooterLink label="Edge Processing" href="#" />
+            <FooterLink label="About Manifesto" href="/about" />
+            <FooterLink label="Contact Protocol" href="/contact" />
           </ul>
         </div>
 

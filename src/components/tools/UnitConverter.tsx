@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Scale, Ruler, Thermometer, Database, ArrowRightLeft, FileText, Download, Check } from "lucide-react";
 import { CustomDropdown } from "@/components/ui/CustomDropdown";
 import { downloadBlob } from "@/lib/downloadUtils";
+import { TiltCard } from "@/components/ui/TiltCard";
 import { motion, AnimatePresence } from "framer-motion";
 
 const units = {
@@ -93,29 +94,31 @@ export const UnitConverter = () => {
   };
 
   const categories = [
-    { id: "length", icon: <Ruler size={14} />, label: "Length" },
-    { id: "weight", icon: <Scale size={14} />, label: "Weight" },
-    { id: "data", icon: <Database size={14} />, label: "Data" },
-    { id: "temp", icon: <Thermometer size={14} />, label: "Temp" },
+    { id: "length", icon: <Ruler size={16} />, label: "Length" },
+    { id: "weight", icon: <Scale size={16} />, label: "Weight" },
+    { id: "data", icon: <Database size={16} />, label: "Data" },
+    { id: "temp", icon: <Thermometer size={16} />, label: "Temp" },
   ];
 
   const unitList = category === "temp" ? ["Celsius", "Fahrenheit", "Kelvin"] : Object.keys(units[category as keyof typeof units]);
 
   return (
     <div className="w-full max-w-2xl mx-auto space-y-8 pb-12">
-      <div className="flex gap-2 p-1.5 bg-white/5 rounded-[1.25rem] border border-white/5 overflow-x-auto no-scrollbar">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {categories.map((cat) => (
-          <button
+          <TiltCard
             key={cat.id}
+            color={category === cat.id ? "rgba(147, 51, 234, 0.4)" : "rgba(255, 255, 255, 0.05)"}
             onClick={() => setCategory(cat.id as Category)}
-            className={`flex items-center gap-2 px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap relative overflow-hidden group ${category === cat.id ? "night-btn-gradient text-white shadow-lg shadow-night-indigo/20" : "text-white/20 hover:text-white"}`}
+            className="cursor-pointer"
           >
-            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-            <span className="relative z-10 flex items-center gap-2">
-                {cat.icon}
-                {cat.label}
-            </span>
-          </button>
+            <div className={`p-6 flex flex-col items-center justify-center gap-3 h-full transition-all ${category === cat.id ? "text-white" : "text-white/20"}`}>
+                <div className={category === cat.id ? "animate-pulse" : ""}>
+                    {cat.icon}
+                </div>
+                <span className="text-[11px] font-black uppercase tracking-[0.4em] text-center">{cat.label}</span>
+            </div>
+          </TiltCard>
         ))}
       </div>
 
@@ -153,7 +156,7 @@ export const UnitConverter = () => {
                 key={output}
                 initial={{ opacity: 0.8, x: -5 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="w-full bg-night-indigo/5 border border-night-indigo/10 rounded-3xl p-6 h-[80px] flex items-center shadow-inner"
+                className="w-full bg-night-indigo/5 border border-night-indigo/10 rounded-[1.5rem] p-6 h-[80px] flex items-center shadow-inner"
             >
                  <p className="text-2xl font-black text-night-indigo truncate">{output}</p>
             </motion.div>
@@ -170,7 +173,7 @@ export const UnitConverter = () => {
         {!showReport ? (
             <button
                 onClick={() => setShowReport(true)}
-                className="w-full py-5 rounded-3xl night-btn-gradient text-white font-black tracking-[0.2em] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-3 uppercase shadow-2xl relative overflow-hidden group"
+                className="w-full py-6 rounded-[2rem] night-btn-gradient text-white font-black tracking-[0.4em] text-[11px] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-4 uppercase shadow-2xl relative overflow-hidden group border border-white/20"
             >
                 <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                 <Scale size={20} className="relative z-10" />
@@ -195,7 +198,7 @@ export const UnitConverter = () => {
                     </div>
                     <button
                         onClick={handleDownloadReport}
-                        className="w-full py-5 rounded-3xl night-btn-gradient text-white font-black tracking-[0.2em] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-3 uppercase shadow-2xl relative overflow-hidden group"
+                        className="w-full py-6 rounded-[2rem] night-btn-gradient text-white font-black tracking-[0.4em] text-[11px] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-4 uppercase shadow-2xl relative overflow-hidden group border border-white/20"
                     >
                         <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                         <Download size={20} className="relative z-10" />

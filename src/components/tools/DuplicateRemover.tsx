@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Filter, Copy, Check, ListChecks, Download } from "lucide-react";
 import { motion } from "framer-motion";
+import { TiltCard } from "@/components/ui/TiltCard";
 import { downloadBlob } from "@/lib/downloadUtils";
 
 export const DuplicateRemover = () => {
@@ -31,15 +32,17 @@ export const DuplicateRemover = () => {
 
     return (
         <div className="w-full max-w-2xl mx-auto space-y-8">
-            <div className="flex gap-4 p-2 bg-white/5 rounded-2xl border border-white/5">
-                <button
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <TiltCard
+                    color={isSorted ? "rgba(16, 185, 129, 0.3)" : "rgba(255, 255, 255, 0.05)"}
                     onClick={() => setIsSorted(!isSorted)}
-                    className={`flex-1 py-3 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all flex items-center justify-center gap-2 relative overflow-hidden group ${isSorted ? "night-btn-gradient text-white shadow-lg" : "text-white/20 hover:text-white"}`}
+                    className="cursor-pointer"
                 >
-                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <Filter size={14} className="relative z-10" />
-                    <span className="relative z-10">Auto Sort Collection</span>
-                </button>
+                    <div className={`p-6 flex flex-col items-center justify-center gap-3 h-full transition-all ${isSorted ? "text-night-emerald" : "text-white/20"}`}>
+                        <Filter size={18} className={isSorted ? "animate-pulse" : ""} />
+                        <span className="text-[11px] font-black uppercase tracking-[0.4em] text-center">Auto Sort Collection</span>
+                    </div>
+                </TiltCard>
             </div>
 
             <div className="space-y-4">
@@ -54,10 +57,10 @@ export const DuplicateRemover = () => {
 
                 <button
                     onClick={processText}
-                    className="w-full py-5 rounded-3xl night-btn-gradient text-white font-black tracking-[0.2em] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-3 uppercase shadow-2xl relative overflow-hidden group"
+                    className="w-full py-6 rounded-[2rem] night-btn-gradient text-white font-black tracking-[0.4em] text-[11px] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-4 uppercase shadow-2xl relative overflow-hidden group border border-white/20"
                 >
                     <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <ListChecks size={18} className="relative z-10" />
+                    <ListChecks size={20} className="relative z-10" />
                     <span className="relative z-10">SYNTHESIZE UNIQUE COLLECTION</span>
                 </button>
 

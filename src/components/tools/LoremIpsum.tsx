@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Copy, Check, PenTool } from "lucide-react";
 import { motion } from "framer-motion";
+import { TiltCard } from "@/components/ui/TiltCard";
 
 const LOREM_TEXT = [
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -43,21 +44,25 @@ export const LoremIpsum = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
                 <div className="space-y-4">
                     <span className="text-[10px] font-black uppercase tracking-widest text-white/30 ml-2">Synthesis Mode</span>
-                    <div className="flex gap-2 p-2 bg-white/5 rounded-2xl border border-white/5">
-                        <button
+                    <div className="grid grid-cols-2 gap-4">
+                        <TiltCard
+                            color={type === "paragraphs" ? "rgba(147, 51, 234, 0.4)" : "rgba(255, 255, 255, 0.05)"}
                             onClick={() => setType("paragraphs")}
-                            className={`flex-1 py-3 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all relative overflow-hidden group ${type === "paragraphs" ? "night-btn-gradient text-white shadow-lg" : "text-white/20 hover:text-white"}`}
+                            className="cursor-pointer"
                         >
-                            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                            <span className="relative z-10">Paragraphs</span>
-                        </button>
-                        <button
+                            <div className={`p-5 flex flex-col items-center justify-center gap-2 h-full transition-all ${type === "paragraphs" ? "text-white" : "text-white/20"}`}>
+                                <span className="text-[11px] font-black uppercase tracking-[0.4em]">Paragraphs</span>
+                            </div>
+                        </TiltCard>
+                        <TiltCard
+                            color={type === "sentences" ? "rgba(147, 51, 234, 0.4)" : "rgba(255, 255, 255, 0.05)"}
                             onClick={() => setType("sentences")}
-                            className={`flex-1 py-3 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all relative overflow-hidden group ${type === "sentences" ? "night-btn-gradient text-white shadow-lg" : "text-white/20 hover:text-white"}`}
+                            className="cursor-pointer"
                         >
-                            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                            <span className="relative z-10">Sentences</span>
-                        </button>
+                            <div className={`p-5 flex flex-col items-center justify-center gap-2 h-full transition-all ${type === "sentences" ? "text-white" : "text-white/20"}`}>
+                                <span className="text-[11px] font-black uppercase tracking-[0.4em]">Sentences</span>
+                            </div>
+                        </TiltCard>
                     </div>
                 </div>
 
@@ -78,10 +83,10 @@ export const LoremIpsum = () => {
 
             <button
                 onClick={generate}
-                className="w-full py-5 rounded-3xl night-btn-gradient text-white font-black tracking-[0.2em] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-3 uppercase shadow-2xl relative overflow-hidden group"
+                className="w-full py-6 rounded-[2rem] night-btn-gradient text-white font-black tracking-[0.4em] text-[11px] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-4 uppercase shadow-2xl relative overflow-hidden group border border-white/20"
             >
                 <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <PenTool size={18} className="relative z-10" />
+                <PenTool size={20} className="relative z-10" />
                 <span className="relative z-10">INITIALIZE GENERATOR</span>
             </button>
 

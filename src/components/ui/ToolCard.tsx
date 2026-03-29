@@ -1,9 +1,7 @@
-"use client";
-
-import React, { useRef, useState, useEffect } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import React from "react";
 import Link from "next/link";
 import { LucideIcon } from "lucide-react";
+import { TiltCard } from "./TiltCard";
 
 interface ToolCardProps {
   id: string;
@@ -15,56 +13,11 @@ interface ToolCardProps {
 }
 
 export const ToolCard = ({ id, title, description, icon: Icon, color, category }: ToolCardProps) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  useEffect(() => {
-    const checkTouch = () => {
-      setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
-    };
-    checkTouch();
-  }, []);
-
-  const mouseXSpring = useSpring(x);
-  const mouseYSpring = useSpring(y);
-
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current || isTouchDevice) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
-    x.set(xPct);
-    y.set(yPct);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
   return (
     <Link href={`/tools/${id}`} className="block h-full no-underline">
-      <motion.div
-        ref={cardRef}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        style={{
-          rotateX: isTouchDevice ? 0 : rotateX,
-          rotateY: isTouchDevice ? 0 : rotateY,
-          transformStyle: "preserve-3d",
-          "--glow-color": color,
-        } as React.CSSProperties}
-        whileHover={isTouchDevice ? {} : { scale: 1.02 }}
-        className="group relative h-full glass-card glow-border p-4 sm:p-6 flex flex-col justify-between flex-shrink-0 cursor-pointer rounded-2xl"
+      <TiltCard
+        color={color}
+        className="p-6 sm:p-8 flex flex-col justify-between h-full"
       >
         {/* 3D Visual Depth Elements */}
         <div style={{ transform: "translateZ(50px)" }} className="relative z-10 flex flex-col h-full">
@@ -80,20 +33,10 @@ export const ToolCard = ({ id, title, description, icon: Icon, color, category }
             </div>
           </div>
 
-          <h3 className="text-lg sm:text-xl font-black text-white mb-1 sm:mb-2 tracking-tight group-hover:text-white transition-colors uppercase">{title}</h3>
-          <p className="text-xs sm:text-sm text-white/70 leading-relaxed font-medium grow">{description}</p>
+          <h3 className="text-lg sm:text-xl font-black text-white/95 mb-1 sm:mb-2 tracking-tight group-hover:text-white transition-colors uppercase">{title}</h3>
+          <p className="text-xs sm:text-sm text-white/50 leading-relaxed font-medium grow">{description}</p>
         </div>
-
-        {/* Glossy Overlay Reflection */}
-        <div 
-          className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-20 transition-opacity duration-500 overflow-hidden"
-          style={{
-            background: `linear-gradient(105deg, transparent 40%, white 50%, transparent 60%)`,
-            backgroundSize: "200% 100%",
-            animation: "shimmer 2s infinite"
-          }}
-        />
-      </motion.div>
+      </TiltCard>
     </Link>
   );
 };

@@ -71,19 +71,19 @@ export const PasswordGenerator = () => {
               {password}
             </p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             <button
               onClick={generatePassword}
-              className="p-4 rounded-2xl bg-white/5 hover:bg-white/10 text-white/40 hover:text-white transition-all"
+              className="p-5 rounded-2xl bg-white/5 hover:bg-white/10 text-white/40 hover:text-white transition-all border border-white/5"
             >
-              <RefreshCw size={20} className="hover:rotate-180 transition-transform duration-500" />
+              <RefreshCw size={22} className="hover:rotate-180 transition-transform duration-500" />
             </button>
             <button
               onClick={copyToClipboard}
-              className="p-4 rounded-2xl night-btn-gradient text-white hover:brightness-110 transition-all shadow-xl shadow-night-emerald/10 relative overflow-hidden group"
+              className="p-5 rounded-2xl night-btn-gradient text-white hover:brightness-110 transition-all shadow-xl relative overflow-hidden group border border-white/20"
             >
               <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-              {copied ? <Check size={20} className="relative z-10" /> : <Copy size={20} className="relative z-10" />}
+              {copied ? <Check size={22} className="relative z-10" /> : <Copy size={22} className="relative z-10" />}
             </button>
           </div>
         </div>
@@ -129,13 +129,13 @@ export const PasswordGenerator = () => {
             </div>
         </div>
 
-        <div className="p-6 rounded-3xl glass-card border-white/5 grid grid-cols-2 gap-3">
+        <div className="p-6 rounded-[2rem] glass-card border-white/5 grid grid-cols-2 gap-4">
           {Object.entries(options).map(([key, value]) => (
             <button
               key={key}
               onClick={() => setOptions({ ...options, [key]: !value })}
-              className={`py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest transition-all ${
-                value ? "bg-white/10 text-white shadow-lg" : "bg-white/5 text-white/20 hover:bg-white/10"
+              className={`py-4 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] transition-all border ${
+                value ? "bg-white/10 text-white border-white/20 shadow-lg" : "bg-white/5 text-white/20 border-transparent hover:bg-white/10"
               }`}
             >
               {key}

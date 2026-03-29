@@ -2,7 +2,7 @@
 
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import {
   X, Shield, Activity, HardDrive, Cpu, Terminal, LogOut,
   Settings, User as UserIcon, Mail, Calendar,
@@ -12,6 +12,7 @@ import { auth } from "@/lib/firebase";
 import { useAuth } from "@/hooks/useAuth";
 import { AuthForms } from "@/components/auth/AuthForms";
 import { useRouter } from "next/navigation";
+import { TiltCard } from "./TiltCard";
 
 interface DashboardProps {
   isOpen: boolean;
@@ -22,8 +23,40 @@ export const Dashboard = ({ isOpen, onClose }: DashboardProps) => {
   const { user, loading, signOut } = useAuth();
   const router = useRouter();
 
-  // Firebase user fields: user.displayName, user.email, user.photoURL,
-  // user.uid, user.metadata.creationTime
+  const containerVariants: Variants = {
+    hidden: { opacity: 0, x: 100 },
+    visible: { 
+      opacity: 1, 
+      x: 0,
+      transition: {
+        type: "spring",
+        damping: 30,
+        stiffness: 300,
+        staggerChildren: 0.1,
+        delayChildren: 0.1
+      }
+    },
+    exit: { 
+      opacity: 0, 
+      x: 100,
+      transition: {
+        duration: 0.3
+      }
+    }
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        type: "spring",
+        damping: 25,
+        stiffness: 200
+      }
+    }
+  };
 
   const displayName = user?.displayName || user?.email?.split("@")[0] || "Night X Agent";
   const avatarInitial = (user?.displayName?.[0] || user?.email?.[0] || "?").toUpperCase();
@@ -41,7 +74,7 @@ export const Dashboard = ({ isOpen, onClose }: DashboardProps) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-night-black/70 backdrop-blur-xl z-[100] cursor-pointer"
+            className="fixed inset-0 bg-night-black/80 backdrop-blur-2xl z-[100] cursor-pointer"
           />
 
           {!loading && !user ? (
@@ -50,41 +83,39 @@ export const Dashboard = ({ isOpen, onClose }: DashboardProps) => {
               initial={{ opacity: 0, scale: 0.9, y: 30 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 30 }}
-              transition={{ type: "spring", damping: 22, stiffness: 260 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
               className="fixed inset-0 z-[101] flex items-center justify-center p-4 sm:p-6 pointer-events-none"
             >
               <div className="relative w-full max-w-sm pointer-events-auto">
-                <div className="absolute -inset-8 bg-gradient-to-br from-night-indigo/20 via-transparent to-night-emerald/20 blur-3xl rounded-full -z-10" />
-                <div className="bg-night-black/95 border border-white/[0.06] rounded-3xl shadow-[0_40px_100px_rgba(0,0,0,0.8)] overflow-hidden">
-                  {/* Header */}
-                  <div className="flex items-center justify-between p-6 pb-0">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-night-indigo to-night-emerald p-[1px]">
-                        <div className="w-full h-full rounded-xl bg-night-black flex items-center justify-center">
-                          <Shield size={18} className="text-night-indigo" />
+                <div className="absolute -inset-16 bg-night-indigo/20 blur-[100px] rounded-full -z-10" />
+                <div className="bg-night-black/95 border border-white/[0.08] rounded-[2.5rem] shadow-[0_50px_100px_rgba(0,0,0,0.9)] overflow-hidden">
+                  <div className="flex items-center justify-between p-7 pb-0">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-night-indigo to-night-emerald p-[1px] shadow-[0_0_20px_rgba(99,102,241,0.2)]">
+                        <div className="w-full h-full rounded-[15px] bg-night-black flex items-center justify-center">
+                          <Shield size={20} className="text-night-indigo" />
                         </div>
                       </div>
                       <div>
-                        <h2 className="text-sm font-black text-white tracking-widest uppercase">Night X ID</h2>
-                        <p className="text-[9px] font-bold text-night-emerald uppercase tracking-[0.3em]">Guest • Unauthorized</p>
+                        <h2 className="text-xs font-black text-white tracking-[0.3em] uppercase">Security Portal</h2>
+                        <p className="text-[9px] font-bold text-white/30 uppercase tracking-[0.4em]">Identity Verification Required</p>
                       </div>
                     </div>
                     <button
                       onClick={onClose}
-                      className="w-9 h-9 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-center hover:bg-white/[0.08] transition-colors"
+                      className="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-center hover:bg-white/[0.1] transition-all"
                     >
-                      <X size={16} className="text-white/40" />
+                      <X size={18} className="text-white/40" />
                     </button>
                   </div>
 
-                  {/* Auth Form */}
-                  <div className="p-6 pt-4">
+                  <div className="p-7 pt-6">
                     <AuthForms onSuccess={onClose} />
                   </div>
 
-                  <div className="px-6 py-4 border-t border-white/[0.04] text-center">
-                    <span className="text-[8px] font-black text-white/10 uppercase tracking-[0.4em] italic">
-                      Zero Data Footprint Architecture
+                  <div className="px-7 py-5 border-t border-white/[0.04] text-center bg-white/[0.01]">
+                    <span className="text-[9px] font-black text-white/10 uppercase tracking-[0.5em] italic">
+                      Zero Data Footprint
                     </span>
                   </div>
                 </div>
@@ -93,70 +124,67 @@ export const Dashboard = ({ isOpen, onClose }: DashboardProps) => {
           ) : (
             /* ─── PROFILE MODAL ─── */
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, x: "20%" }}
-              animate={{ opacity: 1, scale: 1, x: 0 }}
-              exit={{ opacity: 0, scale: 0.95, x: "20%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 md:top-1/2 md:left-1/2 md:right-auto md:-translate-x-1/2 md:-translate-y-1/2 h-full w-full md:h-fit md:max-h-[85vh] md:max-w-md bg-night-black/95 border-l md:border border-white/5 z-[101] flex flex-col shadow-2xl md:shadow-[0_0_100px_rgba(0,0,0,0.8)] md:rounded-[3rem] matte-grain overflow-hidden"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="fixed top-0 right-0 h-full w-full sm:max-w-md bg-night-black/95 border-l border-white/[0.08] z-[101] flex flex-col shadow-[-50px_0_100px_rgba(0,0,0,0.8)] matte-grain overflow-hidden"
             >
-              <div className="flex-1 overflow-y-auto p-6 sm:p-8">
+              <div className="flex-1 overflow-y-auto p-8 sm:p-10">
                 {/* Header */}
-                <div className="flex items-center justify-between mb-8 md:mb-12">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl glass-card flex items-center justify-center border-night-indigo/30 shadow-[0_0_20px_rgba(99,102,241,0.2)]">
-                      <Shield size={20} className="text-night-indigo sm:w-6 sm:h-6" />
+                <motion.div variants={itemVariants} className="flex items-center justify-between mb-12 sm:mb-16">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-2xl glass-card flex items-center justify-center border-night-indigo/40 shadow-[0_0_30px_rgba(99,102,241,0.25)] relative group/logo">
+                      <div className="absolute inset-0 bg-night-indigo/20 blur-xl opacity-0 group-hover/logo:opacity-100 transition-opacity" />
+                      <Shield size={24} className="text-night-indigo relative z-10" />
                     </div>
                     <div>
-                      <h2 className="text-lg sm:text-xl font-black text-white tracking-widest uppercase">Night X ID</h2>
-                      <p className="text-[9px] sm:text-[10px] font-bold text-night-emerald uppercase tracking-[0.3em]">
-                        {loading ? "Verifying..." : `Agent ${user?.uid.slice(0, 4)} • Authorized`}
+                      <h2 className="text-xl font-black text-white tracking-widest uppercase">Operator ID</h2>
+                      <p className="text-[10px] font-black text-night-emerald uppercase tracking-[0.4em] flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-night-emerald animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
+                        {loading ? "Syncing..." : `Session Active • ${user?.uid.slice(0, 8)}`}
                       </p>
                     </div>
                   </div>
                   <button
                     onClick={onClose}
-                    className="w-10 h-10 rounded-xl glass-card flex items-center justify-center hover:bg-white/5 transition-colors"
+                    className="w-11 h-11 rounded-xl glass-card border-white/10 flex items-center justify-center hover:bg-white/10 transition-all hover:scale-110 active:scale-90"
                   >
-                    <X size={20} className="text-white/40" />
+                    <X size={22} className="text-white/40" />
                   </button>
-                </div>
+                </motion.div>
 
                 {loading ? (
                   <div className="flex items-center justify-center h-64">
                     <motion.div
                       animate={{ rotate: 360 }}
                       transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                      className="w-8 h-8 border-2 border-night-indigo border-t-transparent rounded-full"
+                      className="w-10 h-10 border-2 border-night-indigo border-t-transparent rounded-full"
                     />
                   </div>
                 ) : user && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="space-y-6 sm:space-y-8"
-                  >
+                  <div className="space-y-10 sm:space-y-12">
                     {/* Identity Card */}
-                    <div className="p-6 sm:p-8 rounded-[2rem] glass-card border-white/5 bg-gradient-to-br from-white/[0.03] to-transparent relative overflow-hidden group">
-                      <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                        <Shield size={100} className="text-white sm:w-[120px] sm:h-[120px]" />
+                    <motion.div variants={itemVariants} className="p-8 sm:p-10 rounded-[3rem] glass-card border-white/10 bg-gradient-to-br from-white/[0.04] to-transparent relative overflow-hidden group shadow-2xl">
+                      <div className="absolute -top-10 -right-10 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity duration-1000 rotate-12">
+                        <Shield size={220} className="text-white" />
                       </div>
 
-                      <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mb-6 sm:mb-8 text-center sm:text-left">
+                      <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8 mb-10 text-center sm:text-left">
                         <div className="relative group/avatar">
-                          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-gradient-to-br from-night-indigo to-night-emerald p-[1px] shadow-[0_10px_40px_rgba(99,102,241,0.3)] overflow-hidden">
+                          <div className="w-24 h-24 rounded-[2rem] bg-gradient-to-br from-night-indigo via-sky-400 to-night-emerald p-[2px] shadow-[0_20px_50px_rgba(99,102,241,0.4)] overflow-hidden transition-transform duration-500 group-hover/avatar:scale-105 group-hover/avatar:rotate-2">
                             {user.photoURL ? (
-                              <img src={user.photoURL} alt="Avatar" className="w-full h-full object-cover rounded-[23px]" />
+                              <img src={user.photoURL} alt="Avatar" className="w-full h-full object-cover rounded-[1.85rem]" />
                             ) : (
-                              <div className="w-full h-full rounded-[23px] bg-night-black flex items-center justify-center text-2xl sm:text-3xl font-black text-white">
+                              <div className="w-full h-full rounded-[1.85rem] bg-night-black flex items-center justify-center text-4xl font-black text-white">
                                 {avatarInitial}
                               </div>
                             )}
                           </div>
 
-                          {/* Avatar upload (only for email users, not Google) */}
                           {user.providerData?.[0]?.providerId !== "google.com" && (
-                            <label className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover/avatar:opacity-100 transition-opacity cursor-pointer rounded-3xl">
-                              <UserIcon size={20} className="text-white" />
+                            <label className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover/avatar:opacity-100 transition-opacity cursor-pointer rounded-[2rem] backdrop-blur-sm">
+                              <UserIcon size={24} className="text-white" />
                               <input
                                 type="file"
                                 className="hidden"
@@ -179,65 +207,83 @@ export const Dashboard = ({ isOpen, onClose }: DashboardProps) => {
                           )}
                         </div>
                         <div>
-                          <h3 className="text-lg sm:text-xl font-black text-white tracking-tight">{displayName}</h3>
-                          <p className="text-xs font-medium text-white/40">{user.email}</p>
+                          <h3 className="text-2xl font-black text-white tracking-tight mb-2">{displayName}</h3>
+                          <div className="px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 inline-block">
+                            <p className="text-[10px] font-black text-white/40 uppercase tracking-widest">{user.email}</p>
+                          </div>
                         </div>
                       </div>
 
-                      <div className="space-y-3 sm:space-y-4 pt-4 sm:pt-6 border-t border-white/5">
-                        <ProfileDetail icon={<UserIcon size={14} />} label="Access Name" value={displayName} />
-                        <ProfileDetail icon={<Mail size={14} />} label="Identity Email" value={user.email || "N/A"} />
-                        <ProfileDetail icon={<Calendar size={14} />} label="Issued Date" value={joinDate} />
+                      <div className="space-y-4 pt-8 border-t border-white/10">
+                        <ProfileDetail icon={<UserIcon size={14} />} label="Operator" value={displayName} />
+                        <ProfileDetail icon={<Mail size={14} />} label="Network ID" value={user.email || "ANONYMOUS"} />
+                        <ProfileDetail icon={<Calendar size={14} />} label="Authorized On" value={joinDate} />
                       </div>
-                    </div>
+                    </motion.div>
 
                     {/* Performance Grid */}
-                    <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                      <StatCard icon={<Activity size={16} />} label="Status" value="Verified" color="emerald" />
-                      <StatCard icon={<Cpu size={16} />} label="Security" value="AES-256" color="indigo" />
-                      <StatCard icon={<HardDrive size={16} />} label="Vault" value="Encrypted" color="white" />
-                      <StatCard icon={<Terminal size={16} />} label="Session" value="Active" color="white" />
-                    </div>
+                    <motion.div variants={itemVariants} className="grid grid-cols-2 gap-4">
+                      <StatCard icon={<Activity size={16} />} label="Signal" value="Synchronized" color="emerald" />
+                      <StatCard icon={<Cpu size={16} />} label="Core" value="High Poly" color="indigo" />
+                      <StatCard icon={<HardDrive size={16} />} label="Storage" value="Vault Locked" color="white" />
+                      <StatCard icon={<Terminal size={16} />} label="Access" value="Level 4" color="white" />
+                    </motion.div>
 
                     {/* System Actions */}
-                    <div className="space-y-3 pt-4">
-                      <button className="w-full py-3 sm:py-4 px-4 sm:px-6 rounded-2xl glass-card border-white/5 flex items-center justify-between group hover:border-night-indigo/30 transition-all">
-                        <div className="flex items-center gap-3">
-                          <Settings size={18} className="text-white/40 group-hover:text-night-indigo" />
-                          <span className="text-xs sm:text-sm font-bold text-white/60 tracking-wide">System Configuration</span>
+                    <div className="space-y-10 pt-4">
+                      <motion.div variants={itemVariants}>
+                        <h4 className="text-[10px] font-black text-white/20 uppercase tracking-[0.4em] mb-6 flex items-center gap-2">
+                          <span className="w-1 h-1 rounded-full bg-white/20" />
+                          Sub-Ecosystem Protocols
+                        </h4>
+                        <div className="grid grid-cols-2 gap-4">
+                          <ProtocolButton icon={<Shield size={16} />} label="About" onClick={() => { onClose(); router.push("/about"); }} />
+                          <ProtocolButton icon={<Shield size={16} />} label="Privacy" onClick={() => { onClose(); router.push("/privacy"); }} />
+                          <ProtocolButton icon={<Shield size={16} />} label="Terms" onClick={() => { onClose(); router.push("/terms"); }} />
+                          <ProtocolButton icon={<Shield size={16} />} label="Contact" onClick={() => { onClose(); router.push("/contact"); }} />
                         </div>
-                        <span className="text-[9px] sm:text-[10px] font-black text-white/20 uppercase">Modify</span>
-                      </button>
-                      <button
-                        onClick={() => { onClose(); router.push("/terms"); }}
-                        className="w-full py-3 sm:py-4 px-4 sm:px-6 rounded-2xl glass-card border-white/5 flex items-center justify-between group hover:border-white/20 transition-all"
-                      >
-                        <div className="flex items-center gap-3">
-                          <Shield size={18} className="text-white/40 group-hover:text-white" />
-                          <span className="text-xs sm:text-sm font-bold text-white/60 tracking-wide">Terms &amp; Conditions</span>
-                        </div>
-                        <span className="text-[9px] sm:text-[10px] font-black text-white/20 uppercase">View</span>
-                      </button>
-                      <button
-                        onClick={() => { signOut(); onClose(); }}
-                        className="w-full py-3 sm:py-4 px-4 sm:px-6 rounded-2xl glass-card border-white/5 flex items-center justify-between group hover:border-red-500/30 transition-all"
-                      >
-                        <div className="flex items-center gap-3">
-                          <LogOut size={18} className="text-white/40 group-hover:text-red-500" />
-                          <span className="text-xs sm:text-sm font-bold text-white/60 tracking-wide">Terminate Session</span>
-                        </div>
-                        <span className="text-[9px] sm:text-[10px] font-black text-white/20 uppercase">Logout</span>
-                      </button>
+                      </motion.div>
+
+                      <motion.div variants={itemVariants} className="space-y-4">
+                        <button className="w-full py-5 px-7 rounded-[1.5rem] night-btn-gradient flex items-center justify-between group transition-all">
+                          <div className="flex items-center gap-4">
+                            <Settings size={20} className="text-white/60 group-hover:text-white transition-colors" />
+                            <span className="text-sm font-black text-white/90 uppercase tracking-wider transition-colors">Advanced Settings</span>
+                          </div>
+                          <div className="w-2 h-2 rounded-full bg-white/20 group-hover:bg-white transition-colors shadow-[0_0_10px_rgba(255,255,255,0.5)]" />
+                        </button>
+                        <button
+                          onClick={() => { signOut(); onClose(); }}
+                          className="w-full py-5 px-7 rounded-[1.5rem] night-btn-gradient flex items-center justify-between group transition-all"
+                        >
+                          <div className="flex items-center gap-4">
+                            <LogOut size={20} className="text-white/60 group-hover:text-white transition-colors" />
+                            <span className="text-sm font-black text-white/90 uppercase tracking-wider transition-colors">Terminate Session</span>
+                          </div>
+                          <span className="text-[10px] font-black text-white/40 uppercase tracking-widest group-hover:text-white/60 transition-colors">Safety Exit</span>
+                        </button>
+                      </motion.div>
                     </div>
-                  </motion.div>
+                  </div>
                 )}
               </div>
 
-              <div className="p-4 sm:p-8 text-center border-t border-white/5 bg-night-black/60 backdrop-blur-md">
-                <span className="text-[8px] sm:text-[9px] font-black text-white/10 uppercase tracking-[0.3em] sm:tracking-[0.5em] italic">
-                  Zero Data Footprint Architecture
-                </span>
-              </div>
+              {/* Integrity Visualizer */}
+              <motion.div variants={itemVariants} className="p-8 sm:p-10 border-t border-white/10 bg-white/[0.02] backdrop-blur-3xl">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-[10px] font-black text-white/20 uppercase tracking-[0.5em] italic">Ecosystem Integrity</span>
+                  <span className="text-[10px] font-black text-night-emerald uppercase tracking-widest">99.9% Secured</span>
+                </div>
+                <div className="w-full h-1.5 rounded-full bg-white/5 overflow-hidden">
+                  <motion.div 
+                    initial={{ width: 0 }}
+                    animate={{ width: "99.9%" }}
+                    transition={{ duration: 2, ease: "circOut", delay: 0.5 }}
+                    className="h-full bg-gradient-to-r from-night-indigo via-sky-400 to-night-emerald shadow-[0_0_15px_rgba(99,102,241,0.5)]" 
+                  />
+                </div>
+                <p className="mt-4 text-[8px] font-black text-white/5 uppercase tracking-[0.6em] text-center">Zero Data Footprint Architecture</p>
+              </motion.div>
             </motion.div>
           )}
         </>
@@ -246,13 +292,25 @@ export const Dashboard = ({ isOpen, onClose }: DashboardProps) => {
   );
 };
 
-const ProfileDetail = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) => (
-  <div className="flex items-center justify-between gap-2">
-    <div className="flex items-center gap-2 sm:gap-3 text-white/20 shrink-0">
+const ProtocolButton = ({ icon, label, onClick }: { icon: React.ReactNode; label: string; onClick: () => void }) => (
+  <button
+    onClick={onClick}
+    className="w-full py-4 px-5 rounded-2xl night-btn-gradient flex items-center gap-4 group transition-all hover:scale-[1.02] active:scale-95 shadow-xl"
+  >
+    <div className="text-white/60 group-hover:text-white transition-colors flex-shrink-0">
       {icon}
-      <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest">{label}</span>
     </div>
-    <span className="text-[11px] sm:text-xs font-black text-white/80 tracking-wide truncate text-right">{value}</span>
+    <span className="text-[10px] font-black text-white/80 group-hover:text-white tracking-[0.2em] uppercase transition-colors">{label}</span>
+  </button>
+);
+
+const ProfileDetail = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) => (
+  <div className="flex items-center justify-between gap-4 py-1">
+    <div className="flex items-center gap-3 text-white/20 shrink-0">
+      {icon}
+      <span className="text-[10px] font-black uppercase tracking-[0.3em]">{label}</span>
+    </div>
+    <span className="text-xs font-black text-white/90 tracking-tight truncate text-right">{value}</span>
   </div>
 );
 
@@ -267,11 +325,14 @@ const StatCard = ({
   value: string;
   color: string;
 }) => (
-  <div className="p-3 sm:p-4 rounded-2xl sm:rounded-3xl glass-card border-white/5 bg-white/[0.01]">
-    <div className={`mb-2 ${color === "emerald" ? "text-night-emerald" : color === "indigo" ? "text-night-indigo" : "text-white/40"}`}>
-      {icon}
+  <TiltCard color={color === "emerald" ? "#10b981" : color === "indigo" ? "#4338ca" : "#ffffff"} className="rounded-[2rem]">
+    <div className="p-6 h-full group/stat cursor-default">
+      <div className={`mb-3 flex items-center justify-between ${color === "emerald" ? "text-night-emerald" : color === "indigo" ? "text-night-indigo" : "text-white/40"}`}>
+        <div className="group-hover/stat:scale-110 transition-transform">{icon}</div>
+        <div className={`w-1.5 h-1.5 rounded-full ${color === "emerald" ? "bg-night-emerald" : color === "indigo" ? "bg-night-indigo" : "bg-white/20"} shadow-[0_0_10px_currentColor]`} />
+      </div>
+      <div className="text-[9px] font-black text-white/20 uppercase tracking-[0.3em] mb-2">{label}</div>
+      <div className="text-sm font-black text-white tracking-widest">{value}</div>
     </div>
-    <div className="text-[8px] sm:text-[9px] font-black text-white/30 uppercase tracking-widest mb-1">{label}</div>
-    <div className="text-xs sm:text-sm font-black text-white/90">{value}</div>
-  </div>
+  </TiltCard>
 );
