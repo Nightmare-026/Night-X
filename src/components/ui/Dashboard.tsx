@@ -24,10 +24,11 @@ export const Dashboard = ({ isOpen, onClose }: DashboardProps) => {
   const router = useRouter();
 
   const containerVariants: Variants = {
-    hidden: { opacity: 0, x: 100 },
+    hidden: { opacity: 0, scale: 0.95, y: 10 },
     visible: { 
       opacity: 1, 
-      x: 0,
+      scale: 1,
+      y: 0,
       transition: {
         type: "spring",
         damping: 30,
@@ -38,9 +39,10 @@ export const Dashboard = ({ isOpen, onClose }: DashboardProps) => {
     },
     exit: { 
       opacity: 0, 
-      x: 100,
+      scale: 0.95,
+      y: 10,
       transition: {
-        duration: 0.3
+        duration: 0.2
       }
     }
   };
@@ -128,7 +130,7 @@ export const Dashboard = ({ isOpen, onClose }: DashboardProps) => {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="fixed top-0 right-0 h-full w-full sm:w-[85vw] md:max-w-4xl bg-night-black/95 border-l border-white/[0.08] z-[101] flex flex-col shadow-[-50px_0_100px_rgba(0,0,0,0.8)] matte-grain overflow-hidden"
+              className="fixed inset-0 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 h-full w-full sm:h-[90vh] sm:w-[90vw] md:max-w-4xl bg-night-black/95 sm:rounded-[2.5rem] sm:border border-white/[0.08] z-[101] flex flex-col shadow-[0_50px_100px_rgba(0,0,0,0.8)] matte-grain overflow-hidden"
             >
               <div className="flex-1 overflow-y-auto p-8 sm:p-10">
                 {/* Header */}

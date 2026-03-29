@@ -138,7 +138,6 @@ export const Navbar = ({ onSearchChange }: NavbarProps) => {
             </span>
           </div>
 
-          {/* Profile button */}
           <button
             onClick={() => setIsDashboardOpen(true)}
             className="w-11 h-11 rounded-2xl glass-card border-white/10 flex items-center justify-center hover:bg-white/5 transition-all active:scale-95 group-hover:border-night-indigo/40 shadow-2xl relative overflow-hidden"
@@ -151,7 +150,6 @@ export const Navbar = ({ onSearchChange }: NavbarProps) => {
             ) : (
               <User size={22} className="text-white/60 group-hover:text-night-indigo transition-colors" />
             )}
-            <div className={`absolute bottom-1 right-1 w-2 h-2 rounded-full border border-night-black ${user ? "bg-night-emerald" : "bg-white/10"}`} />
           </button>
         </div>
       </motion.nav>
