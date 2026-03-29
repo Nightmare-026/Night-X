@@ -102,22 +102,22 @@ export const Navbar = ({ onSearchChange }: NavbarProps) => {
           {/* User identity text — hidden on mobile */}
           <div className="hidden md:flex flex-col text-right cursor-default select-none">
             <span className="text-[9px] font-black uppercase text-white/30 tracking-[0.2em]">
-              {user ? (user.user_metadata?.full_name || user.email?.split('@')[0]) : "Guest Identity"}
+              {user ? (user.displayName || user.email?.split("@")[0]) : "Guest Identity"}
             </span>
-            <span className={`text-[10px] ${user ? 'text-night-emerald' : 'text-white/20'} font-black flex items-center justify-end gap-1 uppercase tracking-widest`}>
-              <span className={`w-1.5 h-1.5 rounded-full ${user ? 'bg-night-emerald animate-pulse' : 'bg-white/20'}`} />
+            <span className={`text-[10px] ${user ? "text-night-emerald" : "text-white/20"} font-black flex items-center justify-end gap-1 uppercase tracking-widest`}>
+              <span className={`w-1.5 h-1.5 rounded-full ${user ? "bg-night-emerald animate-pulse" : "bg-white/20"}`} />
               {user ? "Authorized" : "Unauthorized"}
             </span>
           </div>
 
           {/* Profile button */}
-          <button 
+          <button
             onClick={() => setIsDashboardOpen(true)}
             className="w-10 h-10 rounded-xl glass-card flex items-center justify-center hover:bg-white/5 transition-all active:scale-95 group-hover:border-night-indigo/30 shadow-[0_0_20px_rgba(99,102,241,0.1)] relative overflow-hidden"
           >
             {user ? (
               <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-night-indigo to-night-emerald text-white font-black text-sm uppercase">
-                {(user.user_metadata?.full_name?.[0] || user.email?.[0] || "?").toUpperCase()}
+                {(user.displayName?.[0] || user.email?.[0] || "?").toUpperCase()}
                 <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
             ) : (

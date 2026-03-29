@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Link from "next/link";
 import { LucideIcon } from "lucide-react";
@@ -16,8 +16,16 @@ interface ToolCardProps {
 
 export const ToolCard = ({ id, title, description, icon: Icon, color, category }: ToolCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
+
+  useEffect(() => {
+    const checkTouch = () => {
+      setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    };
+    checkTouch();
+  }, []);
 
   const mouseXSpring = useSpring(x);
   const mouseYSpring = useSpring(y);
@@ -26,7 +34,7 @@ export const ToolCard = ({ id, title, description, icon: Icon, color, category }
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
+    if (!cardRef.current || isTouchDevice) return;
     const rect = cardRef.current.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
@@ -50,12 +58,12 @@ export const ToolCard = ({ id, title, description, icon: Icon, color, category }
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         style={{
-          rotateX,
-          rotateY,
+          rotateX: isTouchDevice ? 0 : rotateX,
+          rotateY: isTouchDevice ? 0 : rotateY,
           transformStyle: "preserve-3d",
           "--glow-color": color,
         } as React.CSSProperties}
-        whileHover={{ scale: 1.02 }}
+        whileHover={isTouchDevice ? {} : { scale: 1.02 }}
         className="group relative h-full glass-card glow-border p-4 sm:p-6 flex flex-col justify-between flex-shrink-0 cursor-pointer rounded-2xl"
       >
         {/* 3D Visual Depth Elements */}

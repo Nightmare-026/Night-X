@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Filter, Copy, Check, ListChecks, Download } from "lucide-react";
 import { motion } from "framer-motion";
-import { downloadDataUrl } from "@/lib/downloadUtils";
+import { downloadBlob } from "@/lib/downloadUtils";
 
 export const DuplicateRemover = () => {
     const [input, setInput] = useState("");
@@ -25,8 +25,8 @@ export const DuplicateRemover = () => {
     };
 
     const downloadResults = () => {
-        const dataUrl = `data:text/plain;charset=utf-8,${encodeURIComponent(output)}`;
-        downloadDataUrl(dataUrl, "Night-X-Unique-Collection.txt");
+        const blob = new Blob([output], { type: "text/plain;charset=utf-8" });
+        downloadBlob(blob, "Night-X-Unique-Collection.txt");
     };
 
     return (

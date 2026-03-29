@@ -4,18 +4,70 @@ import React, { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Mail, Lock, User, ArrowRight, Loader2, AlertCircle,
-  Sparkles, Eye, EyeOff, CheckCircle, ShieldCheck
+  Sparkles, Eye, EyeOff, CheckCircle, ShieldCheck,
 } from "lucide-react";
-import { supabase } from "@/lib/supabase";
-import { useRouter, usePathname } from "next/navigation";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  updateProfile,
+  AuthError,
+} from "firebase/auth";
+import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
+import { auth, db, googleProvider } from "@/lib/firebase";
 
 interface AuthFormsProps {
   onSuccess?: () => void;
 }
 
+// Map Firebase error codes to user-friendly messages
+const getFirebaseErrorMessage = (code: string): string => {
+  const errorMap: Record<string, string> = {
+    "auth/email-already-in-use": "An account with this email already exists. Please sign in.",
+    "auth/invalid-email": "Please enter a valid email address.",
+    "auth/weak-password": "Password must be at least 6 characters.",
+    "auth/user-not-found": "No account found with this email. Please sign up first.",
+    "auth/wrong-password": "Incorrect password. Please try again.",
+    "auth/invalid-credential": "Invalid email or password. Please check your credentials.",
+    "auth/too-many-requests": "Too many failed attempts. Please wait and try again.",
+    "auth/network-request-failed": "Network error. Please check your internet connection.",
+    "auth/popup-closed-by-user": "Google sign-in was cancelled.",
+    "auth/cancelled-popup-request": "Sign-in cancelled.",
+    "auth/popup-blocked": "Popup was blocked by the browser. Please allow popups for this site.",
+  };
+  return errorMap[code] || "An unexpected error occurred. Please try again.";
+};
+
+// Persist user data to Firestore (safe to call on every login — uses setDoc with merge)
+const persistUserToFirestore = async (
+  uid: string,
+  displayName: string | null,
+  email: string | null,
+  isNewUser = false
+) => {
+  const userRef = doc(db, "users", uid);
+  const snap = await getDoc(userRef);
+
+  if (!snap.exists() || isNewUser) {
+    await setDoc(
+      userRef,
+      {
+        uid,
+        displayName: displayName || email?.split("@")[0] || "Night X Agent",
+        email,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+        provider: isNewUser ? "email" : snap.data()?.provider || "email",
+      },
+      { merge: true }
+    );
+  }
+};
+
 export const AuthForms = ({ onSuccess }: AuthFormsProps) => {
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -24,10 +76,8 @@ export const AuthForms = ({ onSuccess }: AuthFormsProps) => {
     password: "",
     fullName: "",
   });
-  const router = useRouter();
-  const pathname = usePathname();
 
-  /* ── Password Strength Calculator ── */
+  /* ── Password Strength ── */
   const passwordStrength = useMemo(() => {
     const p = formData.password;
     if (!p) return { score: 0, label: "", color: "" };
@@ -45,90 +95,105 @@ export const AuthForms = ({ onSuccess }: AuthFormsProps) => {
     return { score, label: "Excellent", color: "bg-emerald-400" };
   }, [formData.password]);
 
-  /* ── Auth Handler ── */
+  /* ── Email/Password Auth Handler ── */
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
     setSuccess(null);
 
-    // Client-side validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email.trim())) {
-      setError("Please enter a valid email address");
+      setError("Please enter a valid email address.");
       setLoading(false);
       return;
     }
 
     if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters");
+      setError("Password must be at least 6 characters.");
       setLoading(false);
       return;
     }
 
     if (mode === "signup" && !formData.fullName.trim()) {
-      setError("Please enter your full name");
+      setError("Please enter your full name.");
       setLoading(false);
       return;
     }
 
     try {
       if (mode === "signup") {
-        const { data, error: signUpError } = await supabase.auth.signUp({
-          email: formData.email.trim().toLowerCase(),
-          password: formData.password,
-          options: {
-            data: {
-              full_name: formData.fullName.trim(),
-              avatar_url: "",
-            },
-            // Auto-confirm for development — email confirmation not required
-            emailRedirectTo: window.location.origin,
-          },
+        const credential = await createUserWithEmailAndPassword(
+          auth,
+          formData.email.trim().toLowerCase(),
+          formData.password
+        );
+
+        // Set display name on the Firebase Auth profile
+        await updateProfile(credential.user, {
+          displayName: formData.fullName.trim(),
         });
 
-        if (signUpError) throw signUpError;
+        // Persist to Firestore
+        await persistUserToFirestore(
+          credential.user.uid,
+          formData.fullName.trim(),
+          credential.user.email,
+          true
+        );
 
-        // Check if user was created and already confirmed
-        if (data?.user?.identities?.length === 0) {
-          setError("An account with this email already exists. Please sign in.");
-        } else if (data?.session) {
-          setSuccess("Account created successfully! Welcome aboard.");
-          setTimeout(() => {
-            onSuccess?.();
-            if (pathname !== "/") router.push("/");
-          }, 1200);
-        } else {
-          // Email confirmation required
-          setSuccess("Account created! Please check your email to confirm, then sign in.");
-        }
+        setSuccess("Account created successfully! Welcome to Night X.");
+        setTimeout(() => { onSuccess?.(); }, 1200);
       } else {
-        const { error: signInError } = await supabase.auth.signInWithPassword({
-          email: formData.email.trim().toLowerCase(),
-          password: formData.password,
-        });
-
-        if (signInError) {
-          // Better error messages
-          if (signInError.message.includes("Invalid login credentials")) {
-            throw new Error("Invalid email or password. Please check your credentials and try again.");
-          }
-          if (signInError.message.includes("Email not confirmed")) {
-            throw new Error("Your email has not been confirmed yet. Please check your inbox for the confirmation link.");
-          }
-          throw signInError;
-        }
-
+        await signInWithEmailAndPassword(
+          auth,
+          formData.email.trim().toLowerCase(),
+          formData.password
+        );
         setSuccess("Authentication successful! Redirecting...");
-        setTimeout(() => {
-          onSuccess?.();
-          if (pathname !== "/") router.push("/");
-        }, 800);
+        setTimeout(() => { onSuccess?.(); }, 800);
       }
     } catch (err: unknown) {
-      setError((err as Error).message || "An unexpected error occurred. Please try again.");
+      const authError = err as AuthError;
+      setError(getFirebaseErrorMessage(authError.code));
     } finally {
       setLoading(false);
+    }
+  };
+
+  /* ── Google Sign-In Handler ── */
+  const handleGoogleSignIn = async () => {
+    setGoogleLoading(true);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const { user } = result;
+      const isNewUser = (user.metadata.creationTime === user.metadata.lastSignInTime);
+
+      // Always persist/merge user data on Google login
+      await setDoc(
+        doc(db, "users", user.uid),
+        {
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          provider: "google",
+          updatedAt: serverTimestamp(),
+          ...(isNewUser && { createdAt: serverTimestamp() }),
+        },
+        { merge: true }
+      );
+
+      setSuccess("Google authentication successful! Welcome aboard.");
+      setTimeout(() => { onSuccess?.(); }, 800);
+    } catch (err: unknown) {
+      const authError = err as AuthError;
+      setError(getFirebaseErrorMessage(authError.code));
+    } finally {
+      setGoogleLoading(false);
     }
   };
 
@@ -138,6 +203,8 @@ export const AuthForms = ({ onSuccess }: AuthFormsProps) => {
     setSuccess(null);
   };
 
+  const isProcessing = loading || googleLoading;
+
   return (
     <div className="w-full max-w-sm mx-auto">
       {/* ── Mode Toggle ── */}
@@ -145,7 +212,8 @@ export const AuthForms = ({ onSuccess }: AuthFormsProps) => {
         <button
           type="button"
           onClick={() => switchMode("signin")}
-          className={`flex-1 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 ${
+          disabled={isProcessing}
+          className={`flex-1 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 disabled:opacity-50 ${
             mode === "signin"
               ? "night-btn-gradient text-white shadow-[0_0_25px_rgba(147,51,234,0.3)]"
               : "text-white/30 hover:text-white/50"
@@ -156,7 +224,8 @@ export const AuthForms = ({ onSuccess }: AuthFormsProps) => {
         <button
           type="button"
           onClick={() => switchMode("signup")}
-          className={`flex-1 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 ${
+          disabled={isProcessing}
+          className={`flex-1 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 disabled:opacity-50 ${
             mode === "signup"
               ? "night-btn-gradient text-white shadow-[0_0_25px_rgba(147,51,234,0.3)]"
               : "text-white/30 hover:text-white/50"
@@ -181,6 +250,41 @@ export const AuthForms = ({ onSuccess }: AuthFormsProps) => {
             {mode === "signin" ? "Sign in to your account" : "Create your Night X account"}
           </p>
         </motion.div>
+      </div>
+
+      {/* ── Google Sign-In Button ── */}
+      <motion.button
+        type="button"
+        onClick={handleGoogleSignIn}
+        disabled={isProcessing}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.97 }}
+        className="google-btn w-full flex items-center justify-center gap-3 py-3.5 rounded-2xl mb-4 disabled:opacity-50 disabled:pointer-events-none relative overflow-hidden group"
+      >
+        <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+        {googleLoading ? (
+          <Loader2 size={18} className="animate-spin text-white/70" />
+        ) : (
+          <>
+            {/* Google G Icon */}
+            <svg width="18" height="18" viewBox="0 0 48 48" className="flex-shrink-0">
+              <path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34 6.2 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z" />
+              <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.5 16 19 12 24 12c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34 6.2 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z" />
+              <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.3 35.3 26.8 36 24 36c-5.2 0-9.7-3.3-11.3-8H5.9C9.3 36.9 16.1 44 24 44z" />
+              <path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C41 35.6 44 30.2 44 24c0-1.3-.1-2.6-.4-3.9z" />
+            </svg>
+            <span className="text-[11px] font-black text-white/80 uppercase tracking-[0.15em]">
+              Continue with Google
+            </span>
+          </>
+        )}
+      </motion.button>
+
+      {/* ── Divider ── */}
+      <div className="flex items-center gap-3 mb-4">
+        <div className="h-px flex-1 bg-white/[0.06]" />
+        <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.3em]">or</span>
+        <div className="h-px flex-1 bg-white/[0.06]" />
       </div>
 
       {/* ── Form ── */}
@@ -308,15 +412,14 @@ export const AuthForms = ({ onSuccess }: AuthFormsProps) => {
             )}
           </AnimatePresence>
 
-          {/* ── Submit Button — Purple → Light Blue → Pink gradient ── */}
+          {/* ── Submit Button ── */}
           <motion.button
             type="submit"
-            disabled={loading || !!success}
+            disabled={isProcessing || !!success}
             whileHover={{ scale: 1.02, boxShadow: "0 0 60px rgba(147,51,234,0.4), 0 0 120px rgba(56,189,248,0.15)" }}
             whileTap={{ scale: 0.97 }}
             className="night-btn-gradient w-full py-4 rounded-2xl text-white text-xs font-black uppercase tracking-[0.2em] transition-all disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2.5 mt-3 relative overflow-hidden group"
           >
-            {/* Glass shine effect on hover */}
             <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
 
             {loading ? (
@@ -341,7 +444,7 @@ export const AuthForms = ({ onSuccess }: AuthFormsProps) => {
       <div className="flex items-center justify-center gap-2 mt-6 opacity-30">
         <ShieldCheck size={12} />
         <span className="text-[8px] font-bold text-white uppercase tracking-[0.3em]">
-          AES-256 Encrypted • Secure Auth
+          Firebase Auth • AES-256 Encrypted
         </span>
       </div>
     </div>

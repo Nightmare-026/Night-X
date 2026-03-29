@@ -6,14 +6,16 @@ import * as pdfjsLib from "pdfjs-dist";
 import { Download, ImageIcon, FileText, Check } from "lucide-react";
 import { motion } from "framer-motion";
 
-// Configuration for pdf.js worker
-pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.mjs`;
+// Use unpkg for the worker — cdnjs does NOT host the ESM .mjs build reliably
+// unpkg serves the correct UMD build as pdf.worker.min.mjs for v4+
+pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
 
 export const PDFToImage = () => {
   const [file, setFile] = useState<File | null>(null);
   const [images, setImages] = useState<string[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [error, setError] = useState<string | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -25,6 +27,7 @@ export const PDFToImage = () => {
 
   const convertPDF = async () => {
     if (!file) return;
+    setError(null);
 
     try {
       setIsProcessing(true);
@@ -35,7 +38,7 @@ export const PDFToImage = () => {
 
       for (let i = 1; i <= totalPages; i++) {
         const page = await pdf.getPage(i);
-        const viewport = page.getViewport({ scale: 2.0 }); // 2x scale for high res
+        const viewport = page.getViewport({ scale: 2.0 });
         const canvas = document.createElement("canvas");
         const context = canvas.getContext("2d");
         
@@ -51,6 +54,7 @@ export const PDFToImage = () => {
       setIsProcessing(false);
     } catch (err) {
       console.error("PDF Synthesis Fault:", err);
+      setError("Failed to process PDF. Ensure the file is not password-protected.");
       setIsProcessing(false);
     }
   };
@@ -109,14 +113,22 @@ export const PDFToImage = () => {
           )}
 
           {images.length === 0 && !isProcessing && (
-            <button
-                onClick={convertPDF}
-                className="w-full py-5 rounded-3xl night-btn-gradient text-white font-black tracking-[0.2em] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-3 uppercase shadow-2xl relative overflow-hidden group"
-            >
-                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <ImageIcon size={18} className="relative z-10" />
-                <span className="relative z-10">INITIALIZE PAGE EXTRACTION</span>
-            </button>
+            <>
+              {error && (
+                <div className="p-4 rounded-2xl bg-red-500/8 border border-red-500/15 text-red-400 text-[11px] font-semibold flex items-center gap-2">
+                  <span>⚠</span>
+                  <span>{error}</span>
+                </div>
+              )}
+              <button
+                  onClick={convertPDF}
+                  className="w-full py-5 rounded-3xl night-btn-gradient text-white font-black tracking-[0.2em] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-3 uppercase shadow-2xl relative overflow-hidden group"
+              >
+                  <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <ImageIcon size={18} className="relative z-10" />
+                  <span className="relative z-10">INITIALIZE PAGE EXTRACTION</span>
+              </button>
+            </>
           )}
 
           {images.length > 0 && (

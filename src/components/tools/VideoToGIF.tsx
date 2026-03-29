@@ -12,6 +12,7 @@ export const VideoToGIF = () => {
     const [isProcessing, setIsProcessing] = useState(false);
     const [outputUrl, setOutputUrl] = useState<string | null>(null);
     const [status, setStatus] = useState<string>("");
+    const [error, setError] = useState<string | null>(null);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -23,6 +24,7 @@ export const VideoToGIF = () => {
 
     const convertToGIF = async () => {
         if (!file) return;
+        setError(null);
 
         try {
             setIsProcessing(true);
@@ -37,10 +39,9 @@ export const VideoToGIF = () => {
             await ffmpeg.writeFile("input.mp4", await fetchFile(file));
 
             setStatus("Synthesizing Palette & Frames...");
-            // -vf "fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse"
             await ffmpeg.exec([
                 "-i", "input.mp4", 
-                "-t", "5", // limit to 5 seconds to prevent browser memory issues 
+                "-t", "5", 
                 "-vf", "fps=10,scale=480:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse", 
                 "output.gif"
             ]);
@@ -54,7 +55,9 @@ export const VideoToGIF = () => {
             setStatus("Success.");
         } catch (err: unknown) {
             console.error(err);
-            setStatus("Synthesis Error: " + (err as Error).message);
+            VideoEngine.reset();
+            setError("Synthesis Error: " + (err as Error).message);
+            setStatus("");
             setIsProcessing(false);
         }
     };
@@ -104,15 +107,23 @@ export const VideoToGIF = () => {
                     )}
 
                     {!outputUrl ? (
-                         <button
-                            onClick={convertToGIF}
-                            disabled={isProcessing}
-                            className="w-full py-5 rounded-3xl night-btn-gradient text-white font-black tracking-[0.2em] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-3 uppercase shadow-2xl disabled:opacity-50 relative overflow-hidden group"
-                        >
-                            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                            {isProcessing ? <RefreshCw className="animate-spin relative z-10" /> : <Video size={18} className="relative z-10" />}
-                            <span className="relative z-10">{isProcessing ? "SYNTHESIZING GIF..." : "INITIALIZE GENERATION"}</span>
-                        </button>
+                         <>
+                            {error && (
+                                <div className="p-4 rounded-2xl bg-red-500/8 border border-red-500/15 text-red-400 text-[11px] font-semibold flex items-center gap-2">
+                                    <span>⚠</span>
+                                    <span>{error}</span>
+                                </div>
+                            )}
+                            <button
+                                onClick={convertToGIF}
+                                disabled={isProcessing}
+                                className="w-full py-5 rounded-3xl night-btn-gradient text-white font-black tracking-[0.2em] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-3 uppercase shadow-2xl disabled:opacity-50 relative overflow-hidden group"
+                            >
+                                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                {isProcessing ? <RefreshCw className="animate-spin relative z-10" /> : <Video size={18} className="relative z-10" />}
+                                <span className="relative z-10">{isProcessing ? "SYNTHESIZING GIF..." : "INITIALIZE GENERATION"}</span>
+                            </button>
+                         </>
                     ) : (
                         <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="space-y-4">
                              <div className="glass-card rounded-[2rem] overflow-hidden p-4 border-white/5 flex items-center justify-center bg-night-black/40">

@@ -12,6 +12,7 @@ export const VideoShrinker = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [outputUrl, setOutputUrl] = useState<string | null>(null);
   const [status, setStatus] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -23,6 +24,7 @@ export const VideoShrinker = () => {
 
   const shrinkVideo = async () => {
     if (!file) return;
+    setError(null);
 
     try {
       setIsProcessing(true);
@@ -38,7 +40,6 @@ export const VideoShrinker = () => {
       await ffmpeg.writeFile("input.mp4", await fetchFile(file));
 
       setStatus("Executing Sovereign Compression...");
-      // -crf 28 is a good balance for compression
       await ffmpeg.exec(["-i", "input.mp4", "-vcodec", "libx264", "-crf", "30", "output.mp4"]);
 
       setStatus("Retrieving resulting synthesis...");
@@ -50,7 +51,9 @@ export const VideoShrinker = () => {
       setStatus("Success.");
     } catch (err: unknown) {
       console.error(err);
-      setStatus("Engine Fault: " + (err as Error).message);
+      VideoEngine.reset(); // Allow retry on next attempt
+      setError("Compression failed: " + (err as Error).message);
+      setStatus("");
       setIsProcessing(false);
     }
   };
@@ -102,15 +105,23 @@ export const VideoShrinker = () => {
             )}
 
             {!outputUrl ? (
-                <button
-                    onClick={shrinkVideo}
-                    disabled={isProcessing}
-                    className="w-full py-5 rounded-3xl night-btn-gradient text-white font-black tracking-[0.2em] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-3 uppercase shadow-2xl disabled:opacity-50 relative overflow-hidden group"
-                >
-                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    {isProcessing ? <RefreshCw className="animate-spin relative z-10" /> : <Video size={18} className="relative z-10" />}
-                    <span className="relative z-10">{isProcessing ? "PROCESSING ENGINE..." : "INITIALIZE OPTIMIZATION"}</span>
-                </button>
+                <>
+                    {error && (
+                        <div className="p-4 rounded-2xl bg-red-500/8 border border-red-500/15 text-red-400 text-[11px] font-semibold flex items-center gap-2">
+                             <span>⚠</span>
+                             <span>{error}</span>
+                        </div>
+                    )}
+                    <button
+                        onClick={shrinkVideo}
+                        disabled={isProcessing}
+                        className="w-full py-5 rounded-3xl night-btn-gradient text-white font-black tracking-[0.2em] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-3 uppercase shadow-2xl disabled:opacity-50 relative overflow-hidden group"
+                    >
+                        <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        {isProcessing ? <RefreshCw className="animate-spin relative z-10" /> : <Video size={18} className="relative z-10" />}
+                        <span className="relative z-10">{isProcessing ? "PROCESSING ENGINE..." : "INITIALIZE OPTIMIZATION"}</span>
+                    </button>
+                </>
             ) : (
                 <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="space-y-4">
                     <div className="p-6 rounded-3xl bg-night-emerald/5 border border-night-emerald/20 flex items-center justify-between">

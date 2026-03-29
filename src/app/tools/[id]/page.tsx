@@ -134,7 +134,7 @@ export default function ToolPage({ params }: { params: Promise<{ id: string }> }
   const tool = toolsMap[id];
 
   return (
-    <main className="relative min-h-screen">
+    <main className="relative min-h-screen matte-grain">
       <Background3D />
       <Navbar />
 
@@ -162,7 +162,7 @@ export default function ToolPage({ params }: { params: Promise<{ id: string }> }
         </div>
 
         {/* Tool Interaction Area */}
-        <section className="glass-card rounded-2xl sm:rounded-[2.5rem] p-4 sm:p-8 md:p-12 min-h-[400px] sm:min-h-[500px] shadow-2xl relative overflow-hidden border-white/5">
+        <section className="glass-card rounded-2xl sm:rounded-[2.5rem] p-4 sm:p-8 md:p-12 min-h-[400px] sm:min-h-[500px] shadow-2xl relative border-white/5">
           <div className="absolute top-0 right-0 w-96 h-96 bg-night-indigo/5 blur-[120px] pointer-events-none" />
           
           <div className="relative z-10 flex flex-col items-center justify-center h-full w-full">
