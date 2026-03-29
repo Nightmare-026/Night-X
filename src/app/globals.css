@@ -136,11 +136,95 @@ body {
   75% { background-position: 0% 100%; }
   100% { background-position: 0% 50%; }
 }
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
+ 
+ @keyframes shimmer {
+   0% { background-position: -200% 0; }
+   100% { background-position: 200% 0; }
+ }
+ 
+ /* ── Night X Colorful Gradient Border ── */
+ .glow-border-gradient {
+   position: relative;
+   border-radius: 2rem;
+   z-index: 0;
+   overflow: hidden;
+   padding: 1.5px; /* Border thickness */
+ }
+ 
+ .glow-border-gradient::before {
+   content: "";
+   position: absolute;
+   z-index: -2;
+   inset: -50%;
+   background: conic-gradient(
+     from 0deg,
+     #a855f7,
+     #0ea5e9,
+     #f43f5e,
+     #10b981,
+     #a855f7
+   );
+   animation: rotate-gradient 4s linear infinite;
+ }
+ 
+ .glow-border-gradient::after {
+   content: "";
+   position: absolute;
+   z-index: -1;
+   inset: 1.5px;
+   background: var(--color-night-black);
+   border-radius: calc(2rem - 1.5px);
+ }
+ 
+ @keyframes rotate-gradient {
+   from { transform: rotate(0deg); }
+   to { transform: rotate(360deg); }
+ }
+ 
+ .night-input-v2 {
+   width: 100%;
+   background: rgba(255, 255, 255, 0.03);
+   border: 1px solid rgba(255, 255, 255, 0.08);
+   border-radius: 1.25rem;
+   padding: 1rem 1.5rem;
+   font-size: 0.9rem;
+   color: #fff;
+   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+   backdrop-filter: blur(10px);
+ }
+ 
+ .night-input-v2:focus {
+   outline: none;
+   border-color: rgba(168, 85, 247, 0.5);
+   background: rgba(255, 255, 255, 0.05);
+   box-shadow: 0 0 30px rgba(168, 85, 247, 0.15), inset 0 0 15px rgba(255, 255, 255, 0.02);
+   transform: translateY(-1px);
+ }
+ 
+ /* ── Night X Feedback Button ── */
+ .feedback-send-btn {
+   position: relative;
+   overflow: hidden;
+   background: linear-gradient(90deg, #a855f7, #0ea5e9, #f43f5e);
+   background-size: 200% auto;
+   transition: 0.5s;
+   font-weight: 900;
+   letter-spacing: 0.2em;
+   text-transform: uppercase;
+   border-radius: 1.25rem;
+   color: white;
+   box-shadow: 0 10px 40px -10px rgba(168, 85, 247, 0.5);
+ }
+ 
+ .feedback-send-btn:hover {
+   background-position: right center;
+   transform: translateY(-2px);
+   box-shadow: 0 15px 50px -10px rgba(168, 85, 247, 0.7);
+ }
+ 
+ .feedback-send-btn:active {
+   transform: scale(0.98);
+ }
 
 /* ── Night X Glass Input ── */
 .night-input {

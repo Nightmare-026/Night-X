@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import { Search, Grid, User, X } from "lucide-react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { NightXLogo } from "@/components/ui/NightXLogo";
-import { Dashboard } from "@/components/ui/Dashboard";
 import { useAuth } from "@/hooks/useAuth";
+import { useRouter, usePathname } from "next/navigation";
 
 interface NavbarProps {
   onSearchChange?: (query: string) => void;
@@ -13,10 +13,11 @@ interface NavbarProps {
 
 export const Navbar = ({ onSearchChange }: NavbarProps) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isDashboardOpen, setIsDashboardOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
   const { user } = useAuth();
+  const router = useRouter();
+  const pathname = usePathname();
 
   React.useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -139,8 +140,10 @@ export const Navbar = ({ onSearchChange }: NavbarProps) => {
           </div>
 
           <button
-            onClick={() => setIsDashboardOpen(true)}
-            className="w-11 h-11 rounded-2xl glass-card border-white/10 flex items-center justify-center hover:bg-white/5 transition-all active:scale-95 group-hover:border-night-indigo/40 shadow-2xl relative overflow-hidden"
+            onClick={() => router.push("/profile")}
+            className={`w-11 h-11 rounded-2xl glass-card border-white/10 flex items-center justify-center hover:bg-white/5 transition-all active:scale-95 group-hover:border-night-indigo/40 shadow-2xl relative overflow-hidden ${
+              pathname === "/profile" ? "border-night-indigo/60 bg-white/5" : ""
+            }`}
           >
             {user ? (
               <div className="w-full h-full flex items-center justify-center night-btn-gradient text-white font-black text-xs uppercase relative group/av">
@@ -183,7 +186,7 @@ export const Navbar = ({ onSearchChange }: NavbarProps) => {
         )}
       </AnimatePresence>
 
-      <Dashboard isOpen={isDashboardOpen} onClose={() => setIsDashboardOpen(false)} />
+
     </>
   );
 };
