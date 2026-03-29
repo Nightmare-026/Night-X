@@ -87,7 +87,7 @@ export const Dashboard = ({ isOpen, onClose }: DashboardProps) => {
               className="fixed inset-0 z-[101] flex items-center justify-center p-4 sm:p-6"
             >
               <div className="relative w-full max-w-sm">
-                <div className="absolute -inset-16 bg-night-indigo/20 blur-[100px] rounded-full -z-10" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -inset-16 bg-night-indigo/20 blur-[100px] rounded-full -z-10" />
                 <div className="bg-night-black/95 border border-white/[0.08] rounded-[2.5rem] shadow-[0_50px_100px_rgba(0,0,0,0.9)] overflow-hidden">
                   <div className="flex items-center justify-between p-7 pb-0">
                     <div className="flex items-center gap-4">

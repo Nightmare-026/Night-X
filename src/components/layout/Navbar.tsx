@@ -144,7 +144,7 @@ export const Navbar = ({ onSearchChange }: NavbarProps) => {
             className="w-11 h-11 rounded-2xl glass-card border-white/10 flex items-center justify-center hover:bg-white/5 transition-all active:scale-95 group-hover:border-night-indigo/40 shadow-2xl relative overflow-hidden"
           >
             {user ? (
-              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-night-indigo via-sky-400 to-night-emerald text-white font-black text-xs uppercase relative group/av">
+              <div className="w-full h-full flex items-center justify-center night-btn-gradient text-white font-black text-xs uppercase relative group/av">
                 {(user.displayName?.[0] || user.email?.[0] || "?").toUpperCase()}
                 <div className="absolute inset-0 bg-white/20 opacity-0 group-hover/av:opacity-100 transition-opacity" />
               </div>
