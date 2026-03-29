@@ -128,7 +128,7 @@ export const Dashboard = ({ isOpen, onClose }: DashboardProps) => {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="fixed top-0 right-0 h-full w-full sm:max-w-md bg-night-black/95 border-l border-white/[0.08] z-[101] flex flex-col shadow-[-50px_0_100px_rgba(0,0,0,0.8)] matte-grain overflow-hidden"
+              className="fixed top-0 right-0 h-full w-full sm:w-[85vw] md:max-w-4xl bg-night-black/95 border-l border-white/[0.08] z-[101] flex flex-col shadow-[-50px_0_100px_rgba(0,0,0,0.8)] matte-grain overflow-hidden"
             >
               <div className="flex-1 overflow-y-auto p-8 sm:p-10">
                 {/* Header */}
@@ -164,70 +164,76 @@ export const Dashboard = ({ isOpen, onClose }: DashboardProps) => {
                   </div>
                 ) : user && (
                   <div className="space-y-10 sm:space-y-12">
-                    {/* Identity Card */}
-                    <motion.div variants={itemVariants} className="p-8 sm:p-10 rounded-[3rem] glass-card border-white/10 bg-gradient-to-br from-white/[0.04] to-transparent relative overflow-hidden group shadow-2xl">
-                      <div className="absolute -top-10 -right-10 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity duration-1000 rotate-12">
-                        <Shield size={220} className="text-white" />
-                      </div>
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                      {/* Left Column: Identity & Access */}
+                      <div className="lg:col-span-7 space-y-10">
+                        <motion.div variants={itemVariants} className="p-8 sm:p-10 rounded-[3rem] glass-card border-white/10 bg-gradient-to-br from-white/[0.04] to-transparent relative overflow-hidden group shadow-2xl">
+                          <div className="absolute -top-10 -right-10 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity duration-1000 rotate-12 pointer-events-none">
+                            <Shield size={220} className="text-white" />
+                          </div>
 
-                      <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8 mb-10 text-center sm:text-left">
-                        <div className="relative group/avatar">
-                          <div className="w-24 h-24 rounded-[2rem] bg-gradient-to-br from-night-indigo via-sky-400 to-night-emerald p-[2px] shadow-[0_20px_50px_rgba(99,102,241,0.4)] overflow-hidden transition-transform duration-500 group-hover/avatar:scale-105 group-hover/avatar:rotate-2">
-                            {user.photoURL ? (
-                              <img src={user.photoURL} alt="Avatar" className="w-full h-full object-cover rounded-[1.85rem]" />
-                            ) : (
-                              <div className="w-full h-full rounded-[1.85rem] bg-night-black flex items-center justify-center text-4xl font-black text-white">
-                                {avatarInitial}
+                          <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8 mb-10 text-center sm:text-left">
+                            <div className="relative group/avatar shrink-0 z-10">
+                              <div className="w-24 h-24 rounded-[2rem] bg-gradient-to-br from-night-indigo via-sky-400 to-night-emerald p-[1px] shadow-[0_20px_50px_rgba(99,102,241,0.3)] overflow-hidden transition-transform duration-500 group-hover/avatar:scale-105 group-hover/avatar:rotate-2 relative">
+                                {user.photoURL ? (
+                                  <img src={user.photoURL} alt="Avatar" className="w-full h-full object-cover rounded-[1.85rem]" />
+                                ) : (
+                                  <div className="w-full h-full rounded-[1.85rem] bg-night-black flex items-center justify-center text-4xl font-black text-white selection:bg-transparent relative">
+                                    <span className="relative z-10">{avatarInitial}</span>
+                                  </div>
+                                )}
                               </div>
-                            )}
+
+                              {user.providerData?.[0]?.providerId !== "google.com" && (
+                                <label className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover/avatar:opacity-100 transition-opacity cursor-pointer rounded-[2rem] backdrop-blur-sm z-20">
+                                  <UserIcon size={24} className="text-white" />
+                                  <input
+                                    type="file"
+                                    className="hidden"
+                                    accept="image/*"
+                                    onChange={async (e) => {
+                                      const file = e.target.files?.[0];
+                                      if (file && auth.currentUser) {
+                                        const reader = new FileReader();
+                                        reader.onloadend = async () => {
+                                          await updateProfile(auth.currentUser!, {
+                                            photoURL: reader.result as string,
+                                          });
+                                          window.location.reload();
+                                        };
+                                        reader.readAsDataURL(file);
+                                      }
+                                    }}
+                                  />
+                                </label>
+                              )}
+                            </div>
+                            <div className="flex-1 min-w-0 w-full">
+                              <h3 className="text-2xl font-black text-white tracking-tight mb-2 truncate max-w-full">{displayName}</h3>
+                              <div className="px-3 py-1.5 rounded-xl bg-white/[0.05] border border-white/10 flex max-w-full overflow-hidden w-fit mx-auto sm:mx-0">
+                                <p className="text-[10px] sm:text-xs font-black text-white/40 uppercase tracking-widest truncate break-all">{user.email}</p>
+                              </div>
+                            </div>
                           </div>
 
-                          {user.providerData?.[0]?.providerId !== "google.com" && (
-                            <label className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover/avatar:opacity-100 transition-opacity cursor-pointer rounded-[2rem] backdrop-blur-sm">
-                              <UserIcon size={24} className="text-white" />
-                              <input
-                                type="file"
-                                className="hidden"
-                                accept="image/*"
-                                onChange={async (e) => {
-                                  const file = e.target.files?.[0];
-                                  if (file && auth.currentUser) {
-                                    const reader = new FileReader();
-                                    reader.onloadend = async () => {
-                                      await updateProfile(auth.currentUser!, {
-                                        photoURL: reader.result as string,
-                                      });
-                                      window.location.reload();
-                                    };
-                                    reader.readAsDataURL(file);
-                                  }
-                                }}
-                              />
-                            </label>
-                          )}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h3 className="text-2xl font-black text-white tracking-tight mb-2 truncate">{displayName}</h3>
-                          <div className="px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 inline-block max-w-full overflow-hidden">
-                            <p className="text-[10px] font-black text-white/40 uppercase tracking-widest truncate break-all">{user.email}</p>
+                          <div className="space-y-4 pt-8 border-t border-white/10">
+                            <ProfileDetail icon={<UserIcon size={14} />} label="Operator" value={displayName} />
+                            <ProfileDetail icon={<Mail size={14} />} label="Network ID" value={user.email || "ANONYMOUS"} />
+                            <ProfileDetail icon={<Calendar size={14} />} label="Authorized On" value={joinDate} />
                           </div>
-                        </div>
+                        </motion.div>
                       </div>
 
-                      <div className="space-y-4 pt-8 border-t border-white/10">
-                        <ProfileDetail icon={<UserIcon size={14} />} label="Operator" value={displayName} />
-                        <ProfileDetail icon={<Mail size={14} />} label="Network ID" value={user.email || "ANONYMOUS"} />
-                        <ProfileDetail icon={<Calendar size={14} />} label="Authorized On" value={joinDate} />
+                      {/* Right Column: System Performance */}
+                      <div className="lg:col-span-5 h-full">
+                        <motion.div variants={itemVariants} className="grid grid-cols-2 lg:grid-cols-1 gap-4 h-full content-start">
+                          <StatCard icon={<Activity size={16} />} label="Signal" value="Synchronized" color="emerald" />
+                          <StatCard icon={<Cpu size={16} />} label="Core" value="High Poly" color="indigo" />
+                          <StatCard icon={<HardDrive size={16} />} label="Storage" value="Vault Locked" color="white" />
+                          <StatCard icon={<Terminal size={16} />} label="Access" value="Level 4" color="white" />
+                        </motion.div>
                       </div>
-                    </motion.div>
-
-                    {/* Performance Grid */}
-                    <motion.div variants={itemVariants} className="grid grid-cols-2 gap-4">
-                      <StatCard icon={<Activity size={16} />} label="Signal" value="Synchronized" color="emerald" />
-                      <StatCard icon={<Cpu size={16} />} label="Core" value="High Poly" color="indigo" />
-                      <StatCard icon={<HardDrive size={16} />} label="Storage" value="Vault Locked" color="white" />
-                      <StatCard icon={<Terminal size={16} />} label="Access" value="Level 4" color="white" />
-                    </motion.div>
+                    </div>
 
                     {/* System Actions */}
                     <div className="space-y-10 pt-4">
