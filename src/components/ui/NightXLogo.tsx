@@ -20,60 +20,56 @@ export const NightXLogo = ({ size = 40 }: { size?: number }) => {
                     className="absolute inset-0 bg-night-indigo blur-2xl rounded-full"
                 />
 
-                {/* The Interlocking NX Core */}
-                <svg
-                    viewBox="0 0 100 100"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="relative z-10 w-full h-full drop-shadow-[0_0_20px_rgba(79,70,229,0.5)]"
-                >
-                    {/* Shadow Layer (Parallax effect) */}
-                    <motion.path
-                        variants={{
-                            initial: { x: 0, y: 0 },
-                            hover: { x: 2, y: 2 }
-                        }}
-                        d="M20 20L50 50L80 20M20 80L50 50L80 80"
-                        stroke="#000"
-                        strokeWidth="12"
-                        strokeLinecap="round"
-                        className="opacity-20"
-                    />
+                {/* High-Fidelity NX Monogram Reconstruction */}
+                <div className="relative z-10 w-full h-full p-1">
+                    <svg
+                        viewBox="0 0 100 100"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-full h-full drop-shadow-[0_0_20px_rgba(34,211,238,0.5)]"
+                    >
+                        {/* The Interlocking Base Structure */}
+                        <motion.path
+                            variants={{
+                                initial: { pathLength: 0.7, opacity: 0.6 },
+                                hover: { pathLength: 1, opacity: 1 }
+                            }}
+                            transition={{ duration: 1.2, ease: "easeInOut" }}
+                            d="M18 80L28 20L52 65L78 18M52 65L82 82"
+                            stroke="#22d3ee"
+                            strokeWidth="12"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        />
+                        
+                        {/* The Left-Side Contrast Overlay (N-Base) */}
+                        <motion.path
+                            variants={{
+                                initial: { opacity: 0.4 },
+                                hover: { opacity: 0.9 }
+                            }}
+                            d="M18 80L28 20L52 65"
+                            stroke="#0f172a"
+                            strokeWidth="8"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="drop-shadow-[0_0_8px_rgba(34,211,238,0.2)]"
+                        />
 
-                    {/* Main Path: The "N" flow */}
-                    <motion.path
-                        variants={{
-                            initial: { pathLength: 0.8, opacity: 0.7 },
-                            hover: { pathLength: 1, opacity: 1 }
-                        }}
-                        d="M20 80V20L50 50L80 20V80"
-                        stroke="currentColor"
-                        strokeWidth="8"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="text-white"
-                    />
-
-                    {/* Accent Path: The "X" Cross */}
-                    <motion.path
-                        variants={{
-                            initial: { scale: 0.9, opacity: 0.5 },
-                            hover: { scale: 1.1, opacity: 1 }
-                        }}
-                        d="M35 35L65 65M65 35L35 65"
-                        stroke="url(#logic-gradient)"
-                        strokeWidth="8"
-                        strokeLinecap="round"
-                        className="drop-shadow-[0_0_10px_rgba(16,185,129,0.8)]"
-                    />
-
-                    <defs>
-                        <linearGradient id="logic-gradient" x1="0" y1="0" x2="100" y2="100">
-                            <stop offset="0%" stopColor="#6366f1" />
-                            <stop offset="100%" stopColor="#10b981" />
-                        </linearGradient>
-                    </defs>
-                </svg>
+                        {/* Refinement Glow Stroke */}
+                        <motion.path
+                            variants={{
+                                initial: { opacity: 0 },
+                                hover: { opacity: 1 }
+                            }}
+                            d="M52 65L78 18M52 65L82 82"
+                            stroke="#fff"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            className="opacity-40"
+                        />
+                    </svg>
+                </div>
 
                 {/* Refractive Glass Overlay */}
                 <motion.div 
