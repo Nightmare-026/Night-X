@@ -17,7 +17,8 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Background3D } from "@/components/visuals/Background3D";
 import { TiltCard } from "@/components/ui/TiltCard";
-import { ProtocolButton, ProfileDetail, StatCard } from "@/components/ui/Dashboard";
+import { ProtocolButton, ProfileDetail, StatCard } from "@/components/profile/ProfileComponents";
+
 import { Check, X as XIcon, Pencil } from "lucide-react";
 import Image from "next/image";
 import { Variants } from "framer-motion";
