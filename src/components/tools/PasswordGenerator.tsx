@@ -31,8 +31,11 @@ export const PasswordGenerator = () => {
     if (characters === "") return;
 
     let generated = "";
+    const randomArray = new Uint32Array(length);
+    window.crypto.getRandomValues(randomArray);
+
     for (let i = 0; i < length; i++) {
-      generated += characters.charAt(Math.floor(Math.random() * characters.length));
+      generated += characters.charAt(randomArray[i] % characters.length);
     }
     setPassword(generated);
   }, [length, options]);

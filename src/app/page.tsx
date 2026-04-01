@@ -53,7 +53,7 @@ export default function Home() {
                 className="absolute inset-x-[-100px] inset-y-[-50px] blur-[140px] bg-gradient-to-r from-night-indigo via-white/5 to-night-emerald -z-10" 
               />
               
-              <h1 className="text-[clamp(48px,12vw,236px)] font-black tracking-[-0.08em] leading-[0.8] select-none relative">
+              <h1 className="text-[clamp(40px,12vw,236px)] font-black tracking-[-0.08em] leading-[0.8] select-none relative">
                 {/* Layer 1: Sharp High-Depth Shadow */}
                 <span className="absolute inset-0 text-night-black translate-y-6 blur-[15px] opacity-80 group-hover:translate-x-3 transition-transform duration-700">NIGHT X</span>
                 
@@ -103,7 +103,7 @@ export default function Home() {
           {filteredTools.length > 0 ? (
             <motion.div 
               layout
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6"
             >
               <AnimatePresence mode="popLayout">
                 {filteredTools.map((tool) => (

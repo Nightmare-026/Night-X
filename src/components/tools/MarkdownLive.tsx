@@ -15,7 +15,17 @@ export const MarkdownLive = () => {
     useEffect(() => {
         const parseMarkdown = async () => {
              const rawHtml = await marked.parse(markdown);
-             setHtml(DOMPurify.sanitize(rawHtml));
+             // Strict DOMPurify configuration to block suspicious interactions
+             setHtml(DOMPurify.sanitize(rawHtml, {
+                 ALLOWED_TAGS: [
+                     'b', 'i', 'em', 'strong', 'a', 'p', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 
+                     'code', 'pre', 'blockquote', 'hr', 'br', 'span', 'img'
+                 ],
+                 ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'target'],
+                 FORBID_TAGS: ['script', 'iframe', 'object', 'embed', 'form', 'input', 'button', 'textarea'],
+                 FORBID_ATTR: ['onerror', 'onclick', 'onload', 'onmouseover', 'style'],
+                 USE_PROFILES: { html: true }
+             }));
         };
         parseMarkdown();
     }, [markdown]);

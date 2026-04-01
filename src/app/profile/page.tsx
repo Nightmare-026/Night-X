@@ -195,6 +195,15 @@ export default function ProfilePage() {
                                 onChange={async (e) => {
                                   const file = e.target.files?.[0];
                                   if (file && auth.currentUser) {
+                                    // Security: Pre-upload client validation
+                                    if (!file.type.startsWith("image/")) {
+                                      alert("Security Breach Detected: Only image files are allowed.");
+                                      return;
+                                    }
+                                    if (file.size > 5 * 1024 * 1024) {
+                                      alert("Resource Guard: File size exceeds 5MB limit.");
+                                      return;
+                                    }
                                     try {
                                       const storageRef = ref(storage, `avatars/${auth.currentUser.uid}`);
                                       await uploadBytes(storageRef, file);
@@ -225,7 +234,7 @@ export default function ProfilePage() {
                                       animate={{ opacity: 1, x: 0 }}
                                       exit={{ opacity: 0, x: 10 }}
                                    >
-                                      <h2 className="text-5xl font-black text-white tracking-widest uppercase">{displayName}</h2>
+                                      <h2 className="text-2xl sm:text-3xl md:text-5xl font-black text-white tracking-widest uppercase">{displayName}</h2>
                                       <button 
                                          onClick={() => setIsEditingName(true)}
                                          className="p-2 opacity-0 group-hover/name:opacity-100 transition-opacity hover:bg-white/5 rounded-lg text-white/20 hover:text-white"

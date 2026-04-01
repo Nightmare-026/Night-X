@@ -89,7 +89,7 @@ export default function FeedbackPage() {
           <TiltCard color="#ffffff" className="p-8 sm:p-12 relative overflow-hidden bg-night-black/95">
             {/* Form Header */}
             <div className="mb-12">
-              <h1 className="text-4xl font-black tracking-tighter mb-4 text-white uppercase italic">
+              <h1 className="text-2xl sm:text-4xl font-black tracking-tighter mb-4 text-white uppercase italic">
                 SHARE FEEDBACK
               </h1>
               <p className="text-white/40 text-[10px] font-black uppercase tracking-[0.4em]">

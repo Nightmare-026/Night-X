@@ -59,5 +59,8 @@ export const SEO_CONFIG: Metadata = {
       "max-snippet": -1,
     },
   },
+  verification: {
+    google: "YOUR_GSC_VERIFICATION_CODE_HERE", // Replace with your actual code to lock ownership
+  },
   category: "technology",
 };

@@ -68,7 +68,7 @@ export const Navbar = ({ onSearchChange }: NavbarProps) => {
           <NightXLogo />
         </div>
 
-        {/* Floating Center Actions */}
+        {/* Floating Center Actions - Hidden on very small screens, visible from sm up */}
         <div className="hidden sm:flex absolute left-1/2 -translate-x-1/2 items-center gap-2 p-1.5 rounded-2xl glass-card border-white/10 shadow-2xl transition-all duration-700 ease-out hover:border-white/20"
              style={{ width: isSearchOpen ? "380px" : "auto" }}>
           
@@ -87,7 +87,7 @@ export const Navbar = ({ onSearchChange }: NavbarProps) => {
                   className="flex items-center gap-3 px-5 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-[0.2em] text-white/40 hover:text-white hover:bg-white/5 transition-all group"
                 >
                   <Search size={18} className="group-hover:text-night-indigo transition-colors" />
-                  <span>Protocol Search</span>
+                  <span className="hidden md:inline">Protocol Search</span>
                 </button>
               </motion.div>
             ) : (
@@ -119,14 +119,22 @@ export const Navbar = ({ onSearchChange }: NavbarProps) => {
         </div>
 
         {/* Right Section */}
-        <div className="flex items-center gap-3 sm:gap-6 group">
-          {/* Mobile search button */}
-          <button 
-            onClick={handleSearchToggle}
-            className="sm:hidden w-11 h-11 rounded-xl glass-card border-white/10 flex items-center justify-center hover:bg-white/10 transition-all active:scale-95"
-          >
-            {isSearchOpen ? <X size={20} className="text-white/60" /> : <Search size={20} className="text-white/60" />}
-          </button>
+        <div className="flex items-center gap-2 sm:gap-6 group">
+          {/* Mobile buttons group */}
+          <div className="flex sm:hidden items-center gap-2 mr-1">
+             <button 
+              className="w-10 h-10 rounded-xl glass-card border-white/10 flex items-center justify-center night-btn-gradient text-white shadow-lg"
+              title="Ecosystem"
+            >
+              <Grid size={18} />
+            </button>
+            <button 
+              onClick={handleSearchToggle}
+              className="w-10 h-10 rounded-xl glass-card border-white/10 flex items-center justify-center hover:bg-white/10 transition-all active:scale-95"
+            >
+              {isSearchOpen ? <X size={20} className="text-white/60" /> : <Search size={20} className="text-white/60" />}
+            </button>
+          </div>
 
           {/* User identity text */}
           <div className="hidden lg:flex flex-col text-right cursor-default select-none group/identity">
