@@ -12,10 +12,9 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Night X | Elite Utility Hub",
-  description: "A premium, zero-maintenance suite of 17+ powerful online tools. Image, Video, and Developer utilities with a 3D elite interface.",
-};
+import { SEO_CONFIG } from "@/config/seo";
+
+export const metadata: Metadata = SEO_CONFIG;
 
 export default function RootLayout({
   children,
