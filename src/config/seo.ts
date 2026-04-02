@@ -60,7 +60,7 @@ export const SEO_CONFIG: Metadata = {
     },
   },
   verification: {
-    google: "YOUR_GSC_VERIFICATION_CODE_HERE", // Replace with your actual code to lock ownership
+    google: "googlecc74ad26c67f86dd", // Verified from googlecc74ad26c67f86dd.html
   },
   category: "technology",
 };
