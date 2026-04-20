@@ -17,7 +17,7 @@ export const Footer = () => {
         <div className="space-y-6 col-span-2 lg:col-span-1 text-center lg:text-left">
           <NightXLogo size={36} />
           <p className="text-white/40 text-[11px] font-medium leading-relaxed max-w-xs mx-auto lg:mx-0 tracking-wide">
-            Sovereign utility ecosystem. High-performance, zero-maintenance, 100% client-side tools for the elite modern agent.
+            A premium suite of 25+ online tools — image, developer, and text utilities, processed locally in your browser.
           </p>
           <div className="flex justify-center lg:justify-start gap-4 pt-2">
             <SocialLink icon={<Globe size={16} />} href="#" />
@@ -28,22 +28,22 @@ export const Footer = () => {
 
         {/* Systems: Core Access */}
         <div className="space-y-6">
-          <h4 className="text-[10px] font-black uppercase tracking-[0.5em] text-white/20 border-l-2 border-night-indigo pl-4">Digital Assets</h4>
+          <h4 className="text-[10px] font-black uppercase tracking-[0.5em] text-white/20 border-l-2 border-night-indigo pl-4">Navigation</h4>
           <ul className="space-y-3 pl-5">
             <FooterLink label="Utility Hub" href="/" />
-            <FooterLink label="Agent Profile" href="/profile" />
-            <FooterLink label="System Stats" href="/profile" />
-            <FooterLink label="Core Engine" href="/about" />
+            <FooterLink label="My Profile" href="/profile" />
+            <FooterLink label="Feedback" href="/feedback" />
+            <FooterLink label="Contact" href="/contact" />
           </ul>
         </div>
 
         {/* Protocols: Legal & Privacy */}
         <div className="space-y-6">
-          <h4 className="text-[10px] font-black uppercase tracking-[0.5em] text-white/20 border-l-2 border-night-emerald pl-4">Protocols</h4>
+          <h4 className="text-[10px] font-black uppercase tracking-[0.5em] text-white/20 border-l-2 border-night-emerald pl-4">Legal</h4>
           <ul className="space-y-3 pl-5">
-            <FooterLink label="Privacy Vault" href="/privacy" />
-            <FooterLink label="User Agreement" href="/terms" />
-            <FooterLink label="Operational Code" href="/about" />
+            <FooterLink label="Privacy Policy" href="/privacy" />
+            <FooterLink label="Terms of Service" href="/terms" />
+            <FooterLink label="About" href="/about" />
             <FooterLink label="Security Audit" href="/security" />
           </ul>
         </div>
@@ -70,7 +70,7 @@ export const Footer = () => {
                   <div className="w-1.5 h-1.5 rounded-full bg-night-emerald shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
                   <span className="text-[9px] font-black text-white/60 uppercase tracking-widest">Global Status: OK</span>
                 </div>
-                <p className="text-[8px] font-bold text-white/20 uppercase tracking-tighter">Latency: 0.04ms (Optimized)</p>
+                <p className="text-[8px] font-bold text-white/20 uppercase tracking-tighter">All Systems Operational</p>
              </div>
           </div>
         </div>
@@ -81,13 +81,13 @@ export const Footer = () => {
         <div className="flex items-center gap-6 text-[9px] font-black tracking-[0.3em] text-white/50 uppercase">
           <span>© 2026 Night X Sovereign Hub</span>
           <span className="hidden md:block w-1 h-1 rounded-full bg-white/20" />
-          <span className="italic">Forged for the Digital Frontier</span>
+          <span className="italic">Your privacy-first utility hub.</span>
         </div>
         
         <div className="flex flex-wrap justify-center gap-6 sm:gap-10">
-          <Detail icon={<Shield size={10} />} text="End-to-End Encryption" />
+          <Detail icon={<Shield size={10} />} text="TLS In Transit" />
           <Detail icon={<Zap size={10} />} text="Edge Optimized" />
-          <Detail icon={<Globe size={10} />} text="Zero Trace Protocol" />
+          <Detail icon={<Globe size={10} />} text="Client-Side Processing" />
         </div>
       </div>
     </footer>

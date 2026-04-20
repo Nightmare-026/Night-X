@@ -1,5 +1,9 @@
 User-agent: *
 Allow: /
 
+# Disallow private/auth routes
+Disallow: /profile
+Disallow: /api/
+
 # Sitemaps
-Sitemap: https://night-x.web.app/sitemap.xml
+Sitemap: https://night-x.vercel.app/sitemap.xml

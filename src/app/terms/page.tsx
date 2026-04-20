@@ -82,7 +82,7 @@ export default function TermsPage() {
                 id="acceptance"
                 icon={<Scale className="text-night-indigo" size={28} />}
                 title="Acceptance of Protocol"
-                content="By accessing or utilizing the Night X platform, you explicitly acknowledge that you have read, understood, and agree to be bound by this Service Protocol. This agreement constitutes a legally-binding contract between you and the principal architect, 'Nightmare'."
+                content="By accessing or using Night X, you confirm that you have read these Terms of Service and agree to comply with them. Continued use of the platform after any updates constitutes your acceptance of the revised terms."
               />
             </motion.div>
 
@@ -92,7 +92,7 @@ export default function TermsPage() {
                 icon={<Copyright className="text-sky-400" size={28} />}
                 title="Sovereign Intellectual Property"
                 highlight="Exclusive Ownership"
-                content="All source code, UI/UX designs, algorithms, branding, and assets on this Platform are the exclusive property of 'Nightmare'. These are protected by international copyright and trade secret laws. No license is granted for cloning or redistribution."
+                content="All source code, UI/UX designs, algorithms, branding, and assets on this Platform are the exclusive property of Night X. These are protected by copyright law. No license is granted for cloning, reverse-engineering, or commercial redistribution."
               />
             </motion.div>
 
@@ -124,7 +124,7 @@ export default function TermsPage() {
                 icon={<Lock className="text-night-emerald" size={28} />}
                 title="Disclaimer & Liability"
                 highlight="Zero Warranty Architecture"
-                content="Night X tools are provided 'AS IS'. Nightmare makes no warranties regarding the accuracy of calculations or processed data. Nightmare shall not be liable for any indirect, incidental, or consequential damages resulting from platform usage."
+                content="Night X tools are provided 'AS IS' without warranty of any kind. Night X makes no guarantees regarding calculation accuracy or processed output. Night X shall not be liable for any indirect, incidental, or consequential damages resulting from platform usage."
               />
             </motion.div>
 
@@ -143,7 +143,7 @@ export default function TermsPage() {
               <div className="absolute inset-0 bg-gradient-to-br from-night-indigo/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
               <p className="text-white/20 text-[10px] uppercase font-black tracking-[0.5em] mb-6">Protocol Version Execution</p>
               <p className="text-white/60 text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-medium">
-                Nightmare reserves the right to modify this protocol at any time without prior notice. Continuous usage after changes constitutes acceptance.
+                Night X reserves the right to update these terms at any time. We will notify users of material changes via an in-app notice. Continued use after changes constitutes acceptance.
               </p>
               <div className="mt-12 flex justify-center opacity-30 group-hover:opacity-60 transition-opacity">
                 <Gavel size={48} className="text-white" />

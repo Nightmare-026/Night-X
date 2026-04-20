@@ -39,7 +39,7 @@ export default function Home() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-night-emerald opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-night-emerald"></span>
               </span>
-              <span className="text-[10px] font-black tracking-[0.25em] text-white uppercase">Sovereign Matte v2 Active</span>
+              <span className="text-[10px] font-black tracking-[0.25em] text-white uppercase">All Tools Available</span>
             </div>
             
             <div className="relative inline-block mb-12 group">
@@ -55,7 +55,7 @@ export default function Home() {
               
               <h1 className="text-[clamp(40px,12vw,236px)] font-black tracking-[-0.08em] leading-[0.8] select-none relative">
                 {/* Layer 1: Sharp High-Depth Shadow */}
-                <span className="absolute inset-0 text-night-black translate-y-6 blur-[15px] opacity-80 group-hover:translate-x-3 transition-transform duration-700">NIGHT X</span>
+                <span aria-hidden="true" className="absolute inset-0 text-night-black translate-y-6 blur-[15px] opacity-80 group-hover:translate-x-3 transition-transform duration-700">NIGHT X</span>
                 
                 {/* Layer 2: Core Text (With Dynamic Colorful Effect) */}
                 <span className="relative z-10 block text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]">
@@ -83,7 +83,7 @@ export default function Home() {
             </div>
             
             <p className="max-w-3xl mx-auto text-white/80 text-sm sm:text-base md:text-xl font-medium leading-[1.6] mb-8 sm:mb-12 drop-shadow-md px-2 italic tracking-wide">
-              Your sovereign command center. A lightning-fast, zero-data-footprint utility suite featuring image manipulation, typography tools, and developers&apos; utilities computed locally.
+              Your all-in-one utility suite. Privacy-respecting tools for image manipulation, typography, developer utilities, and executive tasks — processed locally in your browser.
             </p>
           </motion.div>
         </div>
@@ -95,7 +95,7 @@ export default function Home() {
           <div className="flex items-center gap-3 sm:gap-4 mb-8 sm:mb-12">
             <div className="h-[2px] flex-1 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
             <h2 className="text-[11px] sm:text-[12px] font-black uppercase tracking-[0.5em] sm:tracking-[1em] text-white/70 whitespace-nowrap">
-              {searchQuery ? `Search Results (${filteredTools.length})` : "Executive Suite"}
+              {searchQuery ? `Results for "${searchQuery}" (${filteredTools.length})` : "All Tools"}
             </h2>
             <div className="h-[2px] flex-1 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
           </div>

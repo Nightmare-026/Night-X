@@ -82,7 +82,7 @@ export default function PrivacyPage() {
                 id="philosophy"
                 icon={<EyeOff className="text-night-emerald" size={28} />}
                 title="Our Privacy Philosophy"
-                content="Night X was built on the foundation of 'Zero Data Footprint'. We believe that professional utilities should not come at the cost of personal privacy. We do not monetize your identity, nor do we track your edge-processing activities."
+                content="Night X is built with privacy as a core design principle. We minimize data collection by running most tool processing entirely in your browser. We do not monetize your identity, and we do not track tool-usage activity."
               />
             </motion.div>
 
@@ -125,7 +125,7 @@ export default function PrivacyPage() {
                 id="rights"
                 icon={<UserCheck className="text-sky-400" size={28} />}
                 title="Your Sovereign Rights"
-                content="Under the IT Act (India) and global standards, you retain the right to access, rectify, or request the full deletion of your identity record. For all data requests, contact our legal desk at ganeshsharma7114@gmail.com."
+                content="Under the Digital Personal Data Protection Act 2023 (DPDP Act) and the IT Act, 2000 (India), you retain the right to access, rectify, or request deletion of your personal data. Submit data requests via our Contact page."
               />
             </motion.div>
 

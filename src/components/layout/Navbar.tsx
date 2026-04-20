@@ -102,7 +102,7 @@ export const Navbar = ({ onSearchChange }: NavbarProps) => {
                 <input 
                   autoFocus
                   type="text"
-                  placeholder="Identify service or protocol..."
+                  placeholder="Search tools and utilities..."
                   className="bg-transparent border-none outline-none text-white text-[11px] font-black uppercase tracking-widest w-full placeholder:text-white/10"
                   value={searchValue}
                   onChange={handleSearchChange}
@@ -139,11 +139,11 @@ export const Navbar = ({ onSearchChange }: NavbarProps) => {
           {/* User identity text */}
           <div className="hidden lg:flex flex-col text-right cursor-default select-none group/identity">
             <span className="text-[11px] font-black uppercase text-white/40 tracking-[0.45em] group-hover/identity:text-white/80 transition-colors">
-              {user ? (user.displayName || user.email?.split("@")[0]) : "Guest Identity"}
+              {user ? (user.displayName || user.email?.split("@")[0]) : ""}
             </span>
             <span className={`text-[11px] ${user ? "text-night-emerald" : "text-white/20"} font-black flex items-center justify-end gap-2 uppercase tracking-[0.55em]`}>
               <span className={`w-2 h-2 rounded-full ${user ? "bg-night-emerald animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.7)]" : "bg-white/20"}`} />
-              {user ? "Authorized Access" : "Unauthorized User"}
+              {user ? "Authorized" : "Sign In"}
             </span>
           </div>
 
@@ -178,7 +178,7 @@ export const Navbar = ({ onSearchChange }: NavbarProps) => {
               <input 
                 autoFocus
                 type="text"
-                placeholder="Find protocols..."
+                placeholder="Search tools..."
                 className="bg-transparent border-none outline-none text-white text-xs font-black uppercase tracking-widest w-full placeholder:text-white/10"
                 value={searchValue}
                 onChange={handleSearchChange}

@@ -101,8 +101,8 @@ export default function ProfilePage() {
                       <Shield size={28} className="text-night-indigo" />
                     </div>
                   </div>
-                  <h2 className="text-xl font-black text-white tracking-[0.3em] uppercase mb-2">Security Portal</h2>
-                  <p className="text-[10px] font-bold text-white/30 uppercase tracking-[0.4em] mb-8">Identification Required for Authorized Access</p>
+                  <h2 className="text-xl font-black text-white tracking-[0.3em] uppercase mb-2">My Account</h2>
+                  <p className="text-[10px] font-bold text-white/30 uppercase tracking-[0.4em] mb-8">Sign in to access your profile</p>
                 </div>
 
                 <div className="p-10 pt-0">
@@ -111,7 +111,7 @@ export default function ProfilePage() {
 
                 <div className="px-10 py-6 border-t border-white/[0.04] text-center bg-white/[0.01]">
                   <span className="text-[10px] font-black text-white/10 uppercase tracking-[0.5em] italic">
-                    Zero Data Footprint Protocol
+                    Secured by Firebase Auth
                   </span>
                 </div>
               </div>
@@ -138,7 +138,7 @@ export default function ProfilePage() {
                     <h1 className="text-3xl font-black text-white tracking-widest uppercase">Member Profile</h1>
                     <p className="text-[10px] font-black text-night-emerald uppercase tracking-[0.5em] flex items-center gap-2 mt-2">
                        <span className="w-2 h-2 rounded-full bg-night-emerald animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
-                       Authorized Agent Access • {user?.uid.slice(0, 8)}
+                       Logged in as {user?.uid.slice(0, 8)}
                     </p>
                   </div>
                 </div>
@@ -197,11 +197,11 @@ export default function ProfilePage() {
                                   if (file && auth.currentUser) {
                                     // Security: Pre-upload client validation
                                     if (!file.type.startsWith("image/")) {
-                                      alert("Security Breach Detected: Only image files are allowed.");
+                                      alert("Only image files are allowed.");
                                       return;
                                     }
                                     if (file.size > 5 * 1024 * 1024) {
-                                      alert("Resource Guard: File size exceeds 5MB limit.");
+                                      alert("File size must be under 5MB.");
                                       return;
                                     }
                                     try {
@@ -282,16 +282,16 @@ export default function ProfilePage() {
                                 Verified Agent
                              </div>
                              <div className="px-4 py-2 rounded-xl bg-night-indigo/20 border border-night-indigo/30 text-[10px] font-black text-night-indigo tracking-[0.2em] uppercase">
-                                LVL 4 Security
+                                Active
                              </div>
                           </div>
                         </div>
                       </div>
 
                       <div className="space-y-8 pt-10 border-t border-white/10 relative z-10">
-                        <ProfileDetail icon={<UserIcon size={20} />} label="Operator Identity" value={displayName} />
-                        <ProfileDetail icon={<Mail size={20} />} label="Communication Port" value={user?.email || "ANONYMOUS"} />
-                        <ProfileDetail icon={<Calendar size={20} />} label="First Authorization" value={joinDate} />
+                        <ProfileDetail icon={<UserIcon size={20} />} label="Name" value={displayName} />
+                        <ProfileDetail icon={<Mail size={20} />} label="Email" value={user?.email || "Not set"} />
+                        <ProfileDetail icon={<Calendar size={20} />} label="Joined" value={joinDate} />
                       </div>
                     </TiltCard>
                   </motion.div>
@@ -300,10 +300,10 @@ export default function ProfilePage() {
                 {/* Right: Stats & System */}
                 <div className="lg:col-span-5 flex flex-col gap-6">
                   <motion.div variants={itemVariants} className="grid grid-cols-2 gap-6 h-full content-start">
-                    <StatCard icon={<Activity size={18} />} label="Signal Status" value="SYNCHRONIZED" color="emerald" />
-                    <StatCard icon={<Cpu size={18} />} label="Core Compute" value="HIGH POLY" color="indigo" />
-                    <StatCard icon={<HardDrive size={18} />} label="Storage Vault" value="ENCRYPTED" color="white" />
-                    <StatCard icon={<Terminal size={18} />} label="CLI Access" value="REMOTE v2.1" color="white" />
+                    <StatCard icon={<Activity size={18} />} label="Auth Status" value="ACTIVE" color="emerald" />
+                    <StatCard icon={<Cpu size={18} />} label="Processing" value="CLIENT-SIDE" color="indigo" />
+                    <StatCard icon={<HardDrive size={18} />} label="Storage" value="FIREBASE" color="white" />
+                    <StatCard icon={<Terminal size={18} />} label="Version" value="v2.1" color="white" />
                   </motion.div>
 
                   <motion.div variants={itemVariants}>
@@ -311,11 +311,11 @@ export default function ProfilePage() {
                         <div className="flex items-center justify-between mb-4">
                            <div className="flex items-center gap-3">
                               <Shield size={20} className="text-night-emerald" />
-                              <span className="text-sm font-black text-white uppercase tracking-widest">Protocol Threat Detection</span>
+                              <span className="text-sm font-black text-white uppercase tracking-widest">Security Status</span>
                            </div>
-                           <span className="text-[10px] font-bold text-night-emerald/50 uppercase">0% Interference</span>
+                           <span className="text-[10px] font-bold text-night-emerald/50 uppercase">All Clear</span>
                         </div>
-                        <p className="text-xs text-white/40 leading-relaxed italic">All local processes are being monitored for data leaks and unauthorized injections.</p>
+                        <p className="text-xs text-white/40 leading-relaxed italic">Your data is processed locally. No tool inputs are transmitted to our servers.</p>
                      </TiltCard>
                   </motion.div>
                 </div>
@@ -327,7 +327,7 @@ export default function ProfilePage() {
                    <motion.div variants={itemVariants}>
                       <h3 className="text-[10px] font-black text-white/20 uppercase tracking-[0.6em] mb-8 flex items-center gap-3">
                         <span className="w-1.5 h-1.5 rounded-full bg-night-indigo" />
-                        Peripheral Access Protocols
+                        Quick Links
                       </h3>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                         <ProtocolButton icon={<Shield size={18} />} label="About Core" onClick={() => router.push('/about')} />
@@ -360,11 +360,11 @@ export default function ProfilePage() {
                           <div className="flex items-center gap-6">
                             <LogOut size={24} className="text-white/40 group-hover:text-red-500 transition-colors" />
                             <div className="text-left">
-                               <p className="text-lg font-black text-white/80 group-hover:text-white uppercase tracking-wider">Terminate Session</p>
+                               <p className="text-lg font-black text-white/80 group-hover:text-white uppercase tracking-wider">Sign Out</p>
                                <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em] mt-1">Clear all local caches & exit hub</p>
                             </div>
                           </div>
-                          <span className="text-[10px] font-black text-white/10 group-hover:text-white/30 uppercase tracking-[0.4em] rotate-90">SAFETY EXIT</span>
+                          <span className="text-[10px] font-black text-white/10 group-hover:text-white/30 uppercase tracking-[0.4em] rotate-90">EXIT</span>
                        </button>
                     </motion.div>
                  </div>

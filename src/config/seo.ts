@@ -5,9 +5,9 @@ export const SEO_CONFIG: Metadata = {
     default: "Night X | Elite Utility Hub",
     template: "%s | Night X"
   },
-  description: "A premium, zero-maintenance suite of 25+ powerful online tools. Image, Video, and Developer utilities with a 3D elite interface. Password Generator, QR Builder, Unit Converter, and more.",
+  description: "Night X is a free suite of 25+ powerful online tools — image compressor, QR builder, PDF converter, password generator, unit converter, and more. 100% browser-based, no signup required.",
   keywords: [
-    "utility hub", "online tools", "developer tools", "image utilities", "video utilities", "3D interface", "night x", "free web tools",
+    "utility hub", "online tools", "developer tools", "image utilities", "video utilities", "night x", "free web tools",
     "password generator", "qr builder", "unit converter", "age calculator", "base64 master", "base converter", "cgpa calculator", 
     "case converter", "color palette", "discount calculator", "duplicate remover", "emi calculator", "image compressor", 
     "image converter", "image to pdf", "json prettier", "lorem ipsum", "markdown live", "pdf to image", "scientific calculator", 
@@ -21,14 +21,14 @@ export const SEO_CONFIG: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL("https://night-x.web.app"),
+  metadataBase: new URL("https://night-x.vercel.app"),
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "Night X | Elite Utility Hub",
     description: "Premium suite of 25+ high-performance online tools for productivity and development.",
-    url: "https://night-x.web.app",
+    url: "https://night-x.vercel.app",
     siteName: "Night X",
     locale: "en_US",
     type: "website",
@@ -44,7 +44,7 @@ export const SEO_CONFIG: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Night X | Elite Utility Hub",
-    description: "Access 25+ powerful web tools instantly with a premium 3D experience.",
+    description: "Access 25+ powerful web tools instantly — fast, free, and secure.",
     creator: "@nightx",
     images: ["/og-preview.png"],
   },
